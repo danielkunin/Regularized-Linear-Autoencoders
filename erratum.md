@@ -15,6 +15,4 @@ complex*, flowing along gradient trajectories from one minimum
 to all minima through index-1 saddles, from those index-1 saddles
 to other index-1 saddles through index-2 saddles, and so on until
 contractibility is satisfied. Note there may exist additional
-"disconnected" critical points forming *null-homotopic chain
-complexes*, such as a pair of adjacent-index critical points with
-a single gradient trajectory between them."
+critical points forming *null-homotopic chain complexes*."
