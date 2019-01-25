@@ -6,7 +6,7 @@ vectors of the encoder and [left] singular vectors of the decoder
 well-defined."
 
 - The final sentence of Appendix B should read: "And since R^m is
-contractible, their method should in principle extend to finding
+contractible, their method may in principle extend to finding
 critical points of higher index that form a *contractible chain
 complex*, flowing along gradient trajectories from one minimum
 to all minima through index-1 saddles, from those index-1 saddles
