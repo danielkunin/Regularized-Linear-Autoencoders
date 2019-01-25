@@ -5,4 +5,4 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 [Code](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/Loss%20Landscapes%20of%20Regularized%20Linear%20Autoencoders%20Code.ipynb).
 
-Contact Daniel and Jon with any questions: kunin@stanford.edu, jbloom@broadinstitute.org
+Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
