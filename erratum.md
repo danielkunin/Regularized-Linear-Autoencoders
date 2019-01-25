@@ -1,4 +1,8 @@
-# Erratum
+# Erratum and Clarification
+
+- In Footnote 1, we write "The principal directions of X are
+the eigenvectors of the covariance of X". To clarify, we mean
+the m x m covariance matrix between the rows of X.
 
 - In Section 2.3, the first paragraph should conclude: "In fact,
 L_2-regularization reduces the symmetry group from GL_k(R) to
