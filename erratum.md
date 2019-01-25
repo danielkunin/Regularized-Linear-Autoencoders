@@ -8,7 +8,7 @@ O_k(R), making the [right] singular vectors of the encoder and
 - In Section 2.3, "(2)" refers to the second item in the list,
 not equation (2).
 
-- The final sentence of Appendix B should read: "And since R^m is
+- In Appendix B, the final sentence should read: "And since R^m is
 contractible, their method may in principle extend to finding
 critical points of higher index that form a *contractible chain
 complex*, flowing along gradient trajectories from one minimum
