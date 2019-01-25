@@ -1,9 +1,12 @@
 # Erratum
 
-- Section 2.3 should read: "In fact, L_2-regularization reduces the
-symmetry group from GL_k(R) to O_k(R), making the [right] singular
-vectors of the encoder and [left] singular vectors of the decoder
-well-defined."
+- In Section 2.3, the first paragraph should conclude: "In fact,
+L_2-regularization reduces the symmetry group from GL_k(R) to
+O_k(R), making the [right] singular vectors of the encoder and
+[left] singular vectors of the decoder well-defined."
+
+- In Section 2.3, "(2)" refers to the second item in the list,
+not equation (2).
 
 - The final sentence of Appendix B should read: "And since R^m is
 contractible, their method may in principle extend to finding
