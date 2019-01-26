@@ -9,7 +9,7 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### LAE-SVD Algorithm
 
-The simplest optimization algorithm for LAE-SVD is gradient descent. In NumPy:
+Here's a simple gradient descent algorithm for LAE-SVD in NumPy:
 
 ```
 XXt = X @ X.T
