@@ -7,7 +7,7 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
-### Algorithm
+### LAE-SVD Algorithm
 
 The simplest optimization algorithm for LAE-SVD is gradient descent. In NumPy:
 
