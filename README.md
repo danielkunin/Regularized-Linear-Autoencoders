@@ -18,7 +18,7 @@ while np.linalg.norm(W1 - W2.T) > epsilon:
     W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
 
 singular_vectors, s,  _ = np.linalg.svd(W2, full_matrices = False))
-singular_values = np.sqrt(lamb / (np.ones(k) - s**2))
+singular_values = np.sqrt(lamb / (1 - s**2))
 ```
 
 This may be accelerated on frameworks like TensorFlow using a host of math, hardware, and deep learning tricks, leveraging our exhaustive understanding of the loss landscape.
