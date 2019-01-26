@@ -1,5 +1,10 @@
 # Clarification and Erratum
 
+### Project history
+
+Daniel interned with [Hail Team](https://hail.is/about.html) at the Broad Institute of MIT and Harvard in Summer 2018. While exploring models of deep matrix factorization for [single-cell RNA sequencing data](https://www.wired.com/story/the-human-cell-atlas-is-biologists-latest-grand-project/), Jon came across v2 of Elad Plaut's [
+From Principal Subspaces to Principal Components with Linear Autoencoders](https://arxiv.org/abs/1804.10253) and contacted the author regarding a subtle error. Plaut agreed the main theorem was false as stated, and in correspondence convincingly re-demonstrated the existance of a fascinating empirical phenomenon. We quickly realized from the scalar case that regularization was the key to symmetry-breaking and rigidity; the form of the general solution was also clear (and easy to verify empircally), as were proofs of additional special cases. The bulk of our time was spent banging against chalkboards and whiteboards to establish a proof that applied in full generality.
+
 - In Section 1, we write "While the paper made no mention of it,
 we realized by looking at the code that training was done with the
 common practice of L2-regularization". While we did realize this by
