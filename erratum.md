@@ -1,4 +1,4 @@
-# Erratum and Clarification
+# Clarification and Erratum
 
 - In Section 1, we write "While the paper made no mention of it,
 we realized by looking at the code that training was done with the
