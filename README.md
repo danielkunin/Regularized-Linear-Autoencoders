@@ -7,6 +7,22 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
+### Algorithm
+
+The simplest optimization algorithm for LAE-SVD is gradient descent. In NumPy:
+
+```
+XXt = X @ X.T
+while np.linalg.norm(W1 - W2.T) > epsilon:
+    W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
+    W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+
+singular_vectors, s,  _ = np.linalg.svd(W2, full_matrices = False))
+singular_values = np.sqrt(lamb / (np.ones(k) - s**2))
+```
+
+This may be accelerated on frameworks like TensorFlow using a host of math, hardware, and deep learning tricks, leveraging our exhaustive understanding of the loss landscape.
+
 ### Project History
 
 Daniel interned with [Hail Team](https://hail.is/about.html) at the [Broad Institute of MIT and Harvard](https://broadinstitute.org) in Summer 2018. While we were exploring models of deep matrix factorization for [single-cell RNA sequencing data](https://www.wired.com/story/the-human-cell-atlas-is-biologists-latest-grand-project/), Jon came across v1 of Elad Plaut's [
