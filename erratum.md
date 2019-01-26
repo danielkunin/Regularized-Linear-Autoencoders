@@ -1,5 +1,12 @@
 # Erratum and Clarification
 
+- In Section 1, we write "While the paper made no mention of it,
+we realized by looking at the code that training was done with the
+common practice of L2-regularization". While we did realize this by
+looking at the code, in fact Plaut does mention in Section IV that
+he found "weight decay regularization" to be beneficial. Our work
+proves that it is necessary.
+
 - In Footnote 1, we write "The principal directions of X are
 the eigenvectors of the covariance of X." To clarify, we mean
 the m x m covariance matrix between the rows of X.
