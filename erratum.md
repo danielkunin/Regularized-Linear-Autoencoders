@@ -34,3 +34,5 @@ to all minima through index-1 saddles, from those index-1 saddles
 to other index-1 saddles through index-2 saddles, and so on until
 contractibility is satisfied. Note there may exist additional
 critical points forming *null-homotopic chain complexes*."
+
+- In Appendix B, the column names of the Morse index table should be the principal directions `u_1`, `u_2`, `u_3`, and `u_4`.
