@@ -12,6 +12,13 @@ O_k(R), making the [right] singular vectors of the encoder and
 - In Section 2.3, "(2)" refers to the second item in the list,
 not equation (2).
 
+- In Section 5 and Appendix B, we explain how the connectedness
+of R^m guarantees that all minima are connected by gradient trajectories
+through index-1 saddles. In fact, as observed empirically with [Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
+these index-1 saddles are, with high probability, at a height close to
+to that of the minima. This is due to a concentration of measure
+phenomenon explored in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233).
+
 - In Appendix B, the final sentence should read: "And since R^m is
 contractible, their method may in principle extend to finding
 critical points of higher index that form a *contractible chain
