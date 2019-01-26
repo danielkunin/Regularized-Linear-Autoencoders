@@ -3,7 +3,7 @@
 - In Section 1, we write "While the paper made no mention of it,
 we realized by looking at the code that training was done with the
 common practice of L2-regularization". While we did realize this by
-looking at the code, in fact Plaut does mention in Section IV that
+looking at the code, in fact Plaut does mention in [Section IV](https://arxiv.org/abs/1804.10253) that
 he found "weight decay regularization" to be beneficial. Our work
 proves that it is necessary.
 
