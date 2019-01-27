@@ -12,17 +12,17 @@ I = np.eye(m)
 
 np.random.seed(0)
 X = np.random.normal(size = (m, n))
-XXt = X @ X.T
-
-W1 = np.random.normal(size = (k, m))
-W2 = np.random.normal(size = (m, k))
 
 start = time.time()
 u, s, _ = np.linalg.svd(X, full_matrices = False)
 end = time.time()
 t = end - start
 
+W1 = np.random.normal(size = (k, m))
+W2 = np.random.normal(size = (m, k))
+
 start = time.time()
+XXt = X @ X.T
 while np.linalg.norm(W1 - W2.T) > eps:
     W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
     W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
