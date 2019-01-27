@@ -21,7 +21,7 @@ singular_vectors, s,  _ = np.linalg.svd(W2, full_matrices = False))
 singular_values = np.sqrt(lamb / (1 - s**2))
 ```
 
-A complete example may be found [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/LAE-SVD.py). This may be accelerated on frameworks like TensorFlow using a host of math, hardware, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape.
+A complete example may be found [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/LAE-SVD.py). This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape.
 
 ### Project History
 
