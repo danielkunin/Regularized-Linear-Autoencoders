@@ -7,7 +7,7 @@ k = 2
 
 eps = 1e-8
 alpha = 1e-5
-lam = 20
+lamb = 20
 I = np.eye(m)
 
 np.random.seed(0)
@@ -24,10 +24,10 @@ t = end - start
 
 start = time.time()
 while np.linalg.norm(W1 - W2.T) > eps:
-    W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lam * W1)
-    W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lam * W2)
+    W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
+    W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
 u2, s2, _ = np.linalg.svd(W2, full_matrices = False)
-s2 = np.sqrt(lam / (1 - s2**2))
+s2 = np.sqrt(lamb / (1 - s2**2))
 end = time.time()
 t2 = end - start
 
