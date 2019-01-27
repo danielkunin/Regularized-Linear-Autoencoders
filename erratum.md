@@ -22,7 +22,7 @@ O_k(R), making the [right] singular vectors of the encoder and
 not equation (2).
 
 - In Section 6 and Appendix B, we explain how the connectedness
-of R^m implies that all minima are connected by gradient trajectories
+of R^m implies that all minima are connected through paths of gradient trajectories
 through index-1 saddles. In fact, as observed empirically with
 [Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
 these saddles are, with high probability, at a height close to
