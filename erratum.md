@@ -11,6 +11,8 @@ proves that it is necessary.
 the eigenvectors of the covariance of X." To clarify, we mean
 the m x m covariance matrix between the rows of X.
 
+- There is an errant ")" before the statement of Theorem 2.1.
+
 - In Section 2.3, the first paragraph should conclude: "In fact,
 L_2-regularization reduces the symmetry group from GL_k(R) to
 O_k(R), making the [right] singular vectors of the encoder and
