@@ -14,7 +14,7 @@ I = np.eye(m)
 np.random.seed(0)
 X = np.random.normal(size = (m, n))
 
-# SVD
+# SVD with dgesdd (divide and conquer)
 start = time.time()
 u, s, _ = np.linalg.svd(X, full_matrices = False)
 end = time.time()
