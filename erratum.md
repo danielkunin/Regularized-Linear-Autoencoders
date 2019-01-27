@@ -26,6 +26,9 @@ these index-1 saddles are, with high probability, at a height close to
 to that of the minima. This is due to the concentration of measure
 phenomenon explored in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233).
 
+- In Appendix B, "topologically inevitable" is not a technical term.
+But is should be.
+
 - In Appendix B, the final sentence should read: "And since R^m is
 contractible, their method may in principle extend to finding
 critical points of higher index that form a *contractible chain
