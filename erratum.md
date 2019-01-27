@@ -22,13 +22,17 @@ O_k(R), making the [right] singular vectors of the encoder and
 not equation (2).
 
 - In Section 6 and Appendix B, we explain how the connectedness
-of R^m guarantees that all minima are connected by gradient trajectories
-through index-1 saddles. In fact, as observed empirically with [Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
-these index-1 saddles are, with high probability, at a height close to
-to that of the minima. This is due to the concentration of measure
-phenomenon explored in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233). In the (regularized) LAE case, our work derives the heights of all critical points in terms of the spectrum of X.
-This spectrum is extremely well-studied for random matrices, including [those](https://arxiv.org/abs/cond-mat/9709283)
-which commonly arise in applications.
+of R^m implies that all minima are connected by gradient trajectories
+through index-1 saddles. In fact, as observed empirically with
+[Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
+these saddles are, with high probability, at a height close to
+to that of the minima. In the (regularized) LAE case, our work
+derives the heights of all critical points in terms of the spectrum of X.
+This spectrum is extremely well-studied for random matrices,
+including [those](https://arxiv.org/abs/cond-mat/9709283)
+which commonly arise in applications. This concentration of
+measure phenomenon is applied to general deep neural networks
+in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233).
 
 - In Appendix B, "topologically inevitable" is not a technical term.
 But is should be.
