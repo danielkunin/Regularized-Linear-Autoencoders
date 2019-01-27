@@ -23,16 +23,16 @@ not equation (2).
 
 - In Section 6 and Appendix B, we explain how the connectedness
 of R^m implies that all minima are connected through paths of gradient trajectories
-through index-1 saddles. In fact, as observed empirically with
-[Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
-these saddles are, with high probability, at a height close to
-to that of the minima. In the (regularized) LAE case, our work
+through index-1 saddles. In the (regularized) LAE case, our work
 derives the heights of all critical points in terms of the spectrum of X.
 This spectrum is extremely well-studied for random matrices,
 including [those](https://arxiv.org/abs/cond-mat/9709283)
-which commonly arise in applications. This concentration of
+which commonly arise in applications. A related concentration of
 measure phenomenon is applied to general deep neural networks
-in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233).
+in [The Loss Landscapes of Multilayer Networds](https://arxiv.org/abs/1412.0233),
+explaining the empirical observation in
+[Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
+of paths between minima that remain *close in height* to the that of the minima.
 
 - In Appendix B, "topologically inevitable" is not a technical term.
 But is should be.
