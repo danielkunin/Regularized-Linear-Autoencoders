@@ -27,11 +27,10 @@ end = time.time()
 t1 = end - start
 
 # LAE-SVD
-W1 = np.random.normal(size = (k, m))
-W2 = np.random.normal(size = (m, k))
-
 start = time.time()
 i = 0
+W1 = np.random.normal(size = (k, m))
+W2 = np.random.normal(size = (m, k))
 XXt = X @ X.T
 while np.linalg.norm(W1 - W2.T) > eps:
     W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
