@@ -37,7 +37,7 @@ explaining the empirical observation in
 of paths between minima that remain *close in height* to the that of the minima.
 
 - In Appendix B, "topologically inevitable" is not a technical term.
-But is should be.
+But it should be.
 
 - In Appendix B, the final sentence should read: "And since R^m is
 contractible, their method may in principle extend to finding
