@@ -17,7 +17,7 @@ while np.linalg.norm(W1 - W2.T) > epsilon:
     W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
     W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
 
-principle_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
+principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
@@ -33,7 +33,7 @@ while diff > epsilon:
     W2 -= update
     diff = np.linalg.norm(update)
 
-principle_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
+principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
