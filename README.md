@@ -29,7 +29,7 @@ The simplest improvement is to constrain `W2 = W1.T` *a priori* (see Appendix A)
 XXt = X @ X.T
 diff = np.inf
 while diff > epsilon:
-	update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
+    update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
     W2 -= update
     diff = np.linalg.norm(update)
 
