@@ -45,15 +45,15 @@ t2 = end - start
 # Regularized Oja's Rule
 start = time.time()
 XXt = X @ X.T
-W = np.random.normal(size = (m, k))
+W2 = np.random.normal(size = (m, k))
 diff = np.inf
 j = 0
 while diff > eps:
-    update = alpha * (((W @ W.T - I) @ XXt) @ W + lamb * W)
-    W -= update
+    update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
+    W2 -= update
     diff = np.linalg.norm(update)
     j += 1
-u3, s3, _ = np.linalg.svd(W, full_matrices = False)
+u3, s3, _ = np.linalg.svd(W2, full_matrices = False)
 s3 = np.sqrt(lamb / (1 - s3**2))
 end = time.time()
 t3 = end - start
