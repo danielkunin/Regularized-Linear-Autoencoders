@@ -37,7 +37,7 @@ principle_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-We call this version **regularized Oja's rule**, since without regularization the two update steps are identical to those of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf).
+We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf).
 
 Runnable examples of these and existing algorithms are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
 
