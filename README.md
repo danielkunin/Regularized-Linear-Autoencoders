@@ -7,21 +7,39 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
-### LAE-SVD Algorithm
+### LAE-PCA Algorithm
 
-Here's a simple gradient descent algorithm for LAE-SVD in NumPy:
+Here's a simple gradient descent algorithm for **LAE-PCA** in NumPy:
 
-```
+```python
 XXt = X @ X.T
 while np.linalg.norm(W1 - W2.T) > epsilon:
     W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
     W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
 
-singular_vectors, s,  _ = np.linalg.svd(W2, full_matrices = False))
-singular_values = np.sqrt(lamb / (1 - s**2))
+principle_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
+eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-A complete example may be found [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/LAE-SVD.py). This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape.
+This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape.
+
+The simplest improvement is to constrain `W2 = W1.T` *a priori* (see Appendix A):
+
+```python
+XXt = X @ X.T
+diff = np.inf
+while diff > epsilon:
+	update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
+    W2 -= update
+    diff = np.linalg.norm(update)
+
+principle_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
+eigenvalues = np.sqrt(lamb / (1 - s**2))
+```
+
+We call this version **regularized Oja's rule**, since without regularization the two update steps are identical to those of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf).
+
+Runnable examples of these and existing algorithms are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
 
 ### Project History
 
