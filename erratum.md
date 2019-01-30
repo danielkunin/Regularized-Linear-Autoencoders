@@ -36,6 +36,10 @@ explaining the empirical observation in
 [Fast Geometric Ensembling](https://arxiv.org/pdf/1802.10026.pdf),
 of paths between minima that remain *close in height* to the that of the minima.
 
+- In Appendix B, citing the 3-dimensional Poincare conjecture is overkill.
+If a homology 3-sphere admits a perfect Morse function, then it consists of
+a 3-cell attached to a 0-cell, and is therefore the 3-sphere.
+
 - In Appendix B, "topologically inevitable" is not a technical term.
 But it should be.
 
