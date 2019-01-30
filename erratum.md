@@ -29,7 +29,7 @@ to other index-1 saddles through index-2 saddles, and so on until
 contractibility is satisfied. Note there may exist additional
 critical points forming *null-homotopic chain complexes*."
 
-##### Typos
+### Typos
 
 - In Footnote 1, we write "The principal directions of X are
 the eigenvectors of the covariance of X." To clarify, we mean
