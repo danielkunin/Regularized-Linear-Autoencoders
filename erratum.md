@@ -21,6 +21,8 @@ O_k(R), making the [right] singular vectors of the encoder and
 - In Section 2.3, "(2)" refers to the second item in the list,
 not equation (2).
 
+- In Theorem 4.2, there is an errant comma after L_\sigma.
+
 - In Section 6, items 1, 3, and 4 in the list are with respect to critical points of the loss function.
 
 - In Section 6 and Appendix B, we explain how the connectedness
