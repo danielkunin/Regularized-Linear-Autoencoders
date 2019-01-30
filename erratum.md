@@ -43,7 +43,7 @@ O_k(R), making the [right] singular vectors of the encoder and
 - In Section 2.3, "(2)" refers to the second item in the list,
 not equation (2).
 
-- There is an errant ")" before the statement of Theorem 2.1.
+- Theorem 2.1 is preceded by an errant ")".
 
 - In Theorem 4.2, there is an errant comma after  L_σ.
 
