@@ -1,0 +1,62 @@
+<!-- Adapted from:
+- https://threejs.org/examples/?q=parametri#webgl_geometries_parametric
+- https://threejs.org/examples/?q=sha#webgl_geometry_extrude_shapes2
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Loss Landscapes of Regularized Linear Autoencoders</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	</head>
+	<style type="text/css">
+		body {
+			color: #eee;
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		#info {
+			position: absolute;
+			top: 0px; width: 25%;
+			padding: 10px;
+		}
+		#container {
+			cursor: move;
+		}
+
+	</style>
+	<body>
+
+		<div id="container"></div>
+		<div id="info">
+			<h1>Loss Landscapes of Regularized Linear Autoencoders</h1>
+			<h4>Daniel Kunin, Jonathan M. Bloom, Aleksandrina Goeva, Cotton Seed</h4>
+			<p>An interactive visualization of the three loss functions.</p>
+			<input type="radio" name="loss" value="unregularized" checked> Unregularized<br>
+			<input type="radio" name="loss" value="product"> Product<br>
+			<input type="radio" name="loss" value="sum"> Sum<br>
+			<input type="range" min="0" max="2" value="0.5" step="0.1" id="lamb">Lambda = <span id="lamb-val">0.5</span><br>
+
+			<select id="cases">
+				<option value="1d">m = 1, k = 1, untied weights</option>
+				<option value="2d">m = 2, k = 1, tied weights</option>
+			</select>
+			<div id="1d" class="data">
+				<input type="range" min="0" max="2" value="1" step="0.1" id="data">X = <span id="data-val">1</span>
+			</div>
+			<div id="2d" class="data" style="display:none">
+				<input type="range" min="0" max="2" value="1" step="0.1" id="singular1">x1 = <span id="singular1-val">1</span><br>
+				<input type="range" min="0" max="2" value="1" step="0.1" id="singular2">x2 = <span id="singular2-val">1</span>
+			</div>
+		</div>
+
+		<script src="js/jquery.js"></script>
+		<script src="js/three/three.js"></script>
+		<script src="js/three/Detector.js"></script>
+		<script src="js/three/controls/OrbitControls.js"></script>
+		<script src="js/landscape.js"></script>
+	</body>
+</html>
+
