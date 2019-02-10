@@ -1,6 +1,6 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-var renderer, scene, camera;//stats
+var renderer, scene, camera;
 
 init();
 animate();
@@ -19,6 +19,7 @@ function init() {
 
 	camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
 	camera.position.set( 0, -30, 30 );
+	camera.up.set( 0, 0, 1 );
 
 	//
 
@@ -38,8 +39,17 @@ function init() {
 
 	var helper = new THREE.GridHelper( 16, 10 );
 	helper.rotation.x = Math.PI / 2;
+	helper.position.set( 0, 0, 0 );
 	group.add( helper );
 
+	//
+
+	var w1 = makeTextSprite( "w1", { fontsize: 20 } );
+	var w2 = makeTextSprite( "w2", { fontsize: 20 } );
+	w1.position.set(-10,0,0);
+	w2.position.set(0,-10,0);
+	group.add( w1 );
+	group.add( w2 )
 
 	//
 
@@ -50,12 +60,7 @@ function init() {
 
 	//
 
-	var controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-	//
-
-	// stats = new Stats();
-	// container.appendChild( stats.dom );
+	controls = new THREE.OrbitControls( camera, renderer.domElement );
 
 	//
 
@@ -77,8 +82,9 @@ function animate() {
 
 	requestAnimationFrame( animate );
 
+	camera.lookAt(0,0,10) 
+
 	render();
-	// stats.update();
 
 }
 
@@ -107,14 +113,15 @@ function addLandscape(loss, data, lamb, mode) {
 					side: THREE.DoubleSide,
 					flatShading: true,
 					transparent: true,
-					opacity: 0.85
+					opacity: 0.8
 				} )
 
 
 	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](data, lamb, mode, 4,4), 100, 100 );
+	geometry.verticesNeedUpdate = true;
 	object = new THREE.Mesh( geometry, material );
 	object.position.set( 0, 0, 0 );
-	object.scale.multiplyScalar( 5 );
+	object.scale.multiplyScalar( 4 );
 
 	scene.add( object );
 }
@@ -225,3 +232,9 @@ $("#singular2").on("input", function() {
 	removeLandscape();
 	addLandscape(loss, data, lamb, mode);
 });
+
+// TO DO:
+//  - Update geometry vertices rather than creating new one for updates to lamb/data
+//  - Simplify jquery event listeners
+//  - Add critical points
+//  - Add axis labels
