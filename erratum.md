@@ -45,6 +45,8 @@ not equation (2).
 
 - Theorem 2.1 is preceded by an errant ")".
 
+- Theorem 2.1 should say "While critical points of L [and L_pi] satisfy W_1 = W_2^+".
+
 - In Theorem 4.2, there is an errant comma after  L_σ.
 
 - In Section 6, items 1, 3, and 4 in the list are with respect to critical points of the loss function.
