@@ -9,6 +9,8 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### LAE-PCA Algorithm
 
+Runnable examples of the algorithms below and others are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
+
 Here's a simple gradient descent algorithm for **LAE-PCA** in NumPy:
 
 ```python
@@ -21,9 +23,7 @@ principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape.
-
-The simplest improvement is to constrain `W2 = W1.T` *a priori* (see Appendix A):
+This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape. For example, one can alternate between exact (convex) minimization with respect to W1 fixing W2 and then with respect to W2 fixing W1. One can also constrain `W2 = W1.T` *a priori* (see Appendix A):
 
 ```python
 XXt = X @ X.T
@@ -37,9 +37,7 @@ principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf).
-
-Runnable examples of these algorithms and others are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
+We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf). Note that this formulation is not convex.
 
 ### Project History
 
