@@ -69,8 +69,8 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
     t = end - start
     return (u, s, t, i, dist, times)
 
-# LAE-PCA using tied weights and gradient descent
-def LAE_PCA_tied(W2, u_svd = None):
+# LAE-PCA using synchronized weights at initialization and gradient descent
+def LAE_PCA_sync(W2, u_svd = None):
     W1 = W2.copy().T
     W2 = W2.copy()
     dist = []
@@ -126,7 +126,7 @@ def LAE_PCA_oja(W2, u_svd = None):
     t = end - start
     return (u, s, t, i, dist, times)
 
-# LAE-PCA using untied weight matrices and alternating Newton's method
+# LAE-PCA using untied weight matrices and alternating exact minimization
 def LAE_PCA_exact(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
@@ -178,8 +178,8 @@ display('Randomized SVD', t, None, u, s)
 (u, s, t, i, _, _) = LAE_PCA_untied(W1, W2, None)
 display('LAE-PCA (untied)', t, i, u, s)
 
-(u, s, t, i, _, _) = LAE_PCA_tied(W2, None)
-display('LAE-PCA (tied)', t, i, u, s)
+(u, s, t, i, _, _) = LAE_PCA_sync(W2, None)
+display('LAE-PCA (sync)', t, i, u, s)
 
 (u, s, t, i, _, _) = LAE_PCA_oja(W2, None)
 display('LAE-PCA (oja)', t, i, u, s)
@@ -189,7 +189,7 @@ display('LAE-PCA (exact)', t, i, u, s)
 
 # perform diagnostic runs
 (_ ,_ ,_ ,_ ,dist2,times2) = LAE_PCA_untied(W1, W2, u_svd)
-(_ ,_ ,_ ,_ ,dist3,times3) = LAE_PCA_tied(W2, u_svd)
+(_ ,_ ,_ ,_ ,dist3,times3) = LAE_PCA_sync(W2, u_svd)
 (_ ,_ ,_ ,_ ,dist4,times4) = LAE_PCA_oja(W2, u_svd)
 (_ ,_ ,_ ,_ ,dist5,times5) = LAE_PCA_exact(W1, W2, u_svd)
 
@@ -197,7 +197,7 @@ plt.plot(dist2)
 plt.plot(dist3)
 plt.plot(dist4)
 plt.plot(dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (tied)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel('Error in SVD factor U')
@@ -207,7 +207,7 @@ plt.plot(np.cumsum(times2), dist2)
 plt.plot(np.cumsum(times3), dist3)
 plt.plot(np.cumsum(times4), dist4)
 plt.plot(np.cumsum(times5), dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (tied)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
 plt.title('Rate of convergence')
 plt.xlabel('Time (sec)')
 plt.ylabel('Error in SVD factor U')
