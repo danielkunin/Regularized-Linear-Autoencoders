@@ -41,7 +41,7 @@ We call this version **regularized Oja's rule**, since without regularization th
 
 ### Visualization
 
-Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the scalar case (n = m = k = 1).
+Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the m = 1, k = 1 case (scalar case) and the m = 2, k = 1 case.
 
 ### Project History
 
