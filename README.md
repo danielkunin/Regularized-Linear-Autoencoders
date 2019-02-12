@@ -7,7 +7,7 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
-### LAE-PCA Algorithm
+### LAE-PCA Algorithms
 
 Runnable examples of the algorithms below and others are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
 
