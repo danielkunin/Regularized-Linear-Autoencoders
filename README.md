@@ -39,6 +39,10 @@ eigenvalues = np.sqrt(lamb / (1 - s**2))
 
 We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf). Note that this formulation is not convex.
 
+### Visualization
+
+Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the scalar case (n = m = k = 1).
+
 ### Project History
 
 Daniel interned with [Hail Team](https://hail.is/about.html) at the [Broad Institute of MIT and Harvard](https://broadinstitute.org) in Summer 2018. While the four of us were exploring models of deep matrix factorization for [single-cell RNA sequencing data](https://www.wired.com/story/the-human-cell-atlas-is-biologists-latest-grand-project/), Jon came across v1 of Elad Plaut's [
