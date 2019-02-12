@@ -9,7 +9,7 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### LAE-PCA Algorithms
 
-Here's a simple gradient descent algorithm for **LAE-PCA** in NumPy:
+Here's a simple gradient descent algorithm for LAE-PCA with **untied** weights (i.e. there is no constraint on `W1` or `W2`):
 
 ```python
 XXt = X @ X.T
