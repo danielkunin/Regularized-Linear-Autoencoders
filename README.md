@@ -50,7 +50,9 @@ From Principal Subspaces to Principal Components with Linear Autoencoders](https
 
 ### Computational neuroscience
 
-In response to v1 of the preprint, [Yoshua Benjio](http://www.iro.umontreal.ca/~bengioy/yoshua_en/) wrote us that "the question of obtaining the transpose is actually pretty important for research on a biologically plausible version of backprop, because if you obtain approximate transposes, then several local learning rules give rise to gradient estimator analogues of backprop." He pointed us to his wonderful papers [Towards Biologically Plausible Deep Learning](https://arxiv.org/pdf/1502.04156.pdf) and [How Important Is Weight Symmetry in Backpropagation?](https://arxiv.org/pdf/1510.05067.pdf). Neuroscientist [Dan Bear](http://neuroailab.stanford.edu/people.html) was kind enough to share his perspective as follows:
+In response to v1 of the preprint, [Yoshua Benjio](http://www.iro.umontreal.ca/~bengioy/yoshua_en/) wrote us that "the question of obtaining the transpose is actually pretty important for research on a biologically plausible version of backprop, because if you obtain approximate transposes, then several local learning rules give rise to gradient estimator analogues of backprop." He also pointed us to his wonderful papers [Towards Biologically Plausible Deep Learning](https://arxiv.org/pdf/1502.04156.pdf) and [How Important Is Weight Symmetry in Backpropagation?](https://arxiv.org/pdf/1510.05067.pdf)
+
+Neuroscientist [Dan Bear](http://neuroailab.stanford.edu/people.html) was also kind enough to share his perspective as follows:
 
 Deep Neural Networks (DNNs) are algorithms that apply a sequence of linear and nonlinear transformations to each input data point, such as an image represented by a matrix of RGB pixel values. DNNs are now widely used in computer vision because they make useful visual information more explicit: for instance, it's hard or impossible to tell what type of object is in an image by training a linear classifier on its pixels or even on the outputs of a shallow neural network; but DNNs can be optimized to perform this sort of "difficult" visual task. 
 
