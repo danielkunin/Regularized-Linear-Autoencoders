@@ -9,8 +9,6 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### LAE-PCA Algorithms
 
-Runnable examples of the algorithms below and others are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
-
 Here's a simple gradient descent algorithm for **LAE-PCA** in NumPy:
 
 ```python
@@ -23,7 +21,7 @@ principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape. For example, one can alternate between **exact** convex minimization with respect to `W1` fixing `W2` and then with respect to `W2` fixing `W1`. Or one can constrain, or tie, `W2 = W1.T` *a priori* (see Appendix A):
+This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape. For example, one can alternate between **exact** convex minimization with respect to `W1` fixing `W2` and then with respect to `W2` fixing `W1`. Or one can **synchronize** `W1` and `W2` to be transposes at initialization. Or one can constrain, or tie, `W2 = W1.T` *a priori* (see Appendix A):
 
 ```python
 XXt = X @ X.T
@@ -39,7 +37,7 @@ eigenvalues = np.sqrt(lamb / (1 - s**2))
 
 We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf). Note that this formulation is not convex.
 
-We implemented two other variants of the LAE-PCA algorithm and compared their convergence rates.
+The four variants of the LAE-PCA algorithm described above and runnable examples comparing their convergence rates are [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms.py).
 
 <p align="center">
     <img src="/img/time.png" alt="error per sec" width="400"/>
