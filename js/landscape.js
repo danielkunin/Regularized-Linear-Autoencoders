@@ -49,7 +49,7 @@ function init() {
 	w1.position.set(-10,0,0);
 	w2.position.set(0,-10,0);
 	group.add( w1 );
-	group.add( w2 )
+	group.add( w2 );
 
 	//
 
@@ -81,8 +81,8 @@ function onWindowResize() {
 function animate() {
 
 	requestAnimationFrame( animate );
-
-	camera.lookAt(0,0,10) 
+	var dist = (camera.position.x**2 + camera.position.y**2 + camera.position.z**2)**0.25;
+	camera.lookAt(0,0,dist) 
 
 	render();
 
@@ -234,7 +234,14 @@ $("#singular2").on("input", function() {
 });
 
 // TO DO:
-//  - Update geometry vertices rather than creating new one for updates to lamb/data
-//  - Simplify jquery event listeners
-//  - Add critical points
-//  - Add axis labels
+// - Update geometry vertices rather than creating new one for updates to lamb/data
+// - Simplify jquery event listeners
+// - Add critical points
+// - Add axis labels
+// - why do X, x1 and x2 show three numbers with commas?
+// - use lowercase and subscript: x, x_1, x_2, w_1, w_2. Use symbol for lambda instead 
+// - white on grey is not so easy to read, perhaps go dark with the text and even lighter on background?
+// - with tied weights, w_1 and w_2 is confusing. maybe w_11 and w_12?
+// - could you include the lose function itself to set notation, with the regularization term changing when you toggle between the models? that will make it far more self-contained.
+// - i don't like how "An interactive visualization of the three loss functions." has last word on separate line
+// - add cross-links from .io to .com and vice versa
