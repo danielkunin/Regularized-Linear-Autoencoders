@@ -39,12 +39,6 @@ eigenvalues = np.sqrt(lamb / (1 - s**2))
 
 We call this version **regularized Oja's rule**, since without regularization the update step is identical to that of [Oja's Rule](http://www.cs.cmu.edu/~bhiksha/courses/deeplearning/Fall.2016/pdfs/OJA.pca.pdf). Note that this formulation is not convex.
 
-We implemented two other variants of the LAE-PCA algorithm and compared their convergence rates.  
-
-<p align="center">
-    <img src="/img/algorithm.jpeg" alt="convergence rates" />
-</p>
-
 ### Visualization
 
 Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
