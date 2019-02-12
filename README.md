@@ -42,8 +42,8 @@ We call this version **regularized Oja's rule**, since without regularization th
 We implemented two other variants of the LAE-PCA algorithm and compared their convergence rates.
 
 <p align="center">
-    <img src="/img/time.png" alt="error per sec" width="300"/>
-    <img src="/img/iteration.png" alt="error per iteration" width="300"/>
+    <img src="/img/time.png" alt="error per sec" width="400"/>
+    <img src="/img/iteration.png" alt="error per iteration" width="400"/>
 </p>
 
 ### Visualization
