@@ -43,8 +43,8 @@ def randomized_svd_wrapper():
     t = end - start
     return (u, s, t)
 
-# LAE-PCA using gradient descent
-def LAE_PCA_GD(W1, W2, u_svd = None):
+# LAE-PCA using untied weights and gradient descent
+def LAE_PCA_untied(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
     start = time.time()
@@ -65,8 +65,34 @@ def LAE_PCA_GD(W1, W2, u_svd = None):
     t = end - start
     return (u, s, t, i, dist)
 
-# Regularized Oja's Rule
-def LAE_PCA_Oja_GD(W2, u_svd = None):
+# LAE-PCA using tied weights and gradient descent
+def LAE_PCA_tied(W2, u_svd = None):
+    W1 = W2.copy().T
+    W2 = W2.copy()
+    start = time.time()
+    XXt = X @ X.T
+    diff = np.inf
+    i = 0
+    dist = []
+    while diff > eps:
+        W1_update = alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
+        W2_update = alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+        W1 -= W1_update
+        W2 -= W2_update
+        diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
+        
+        if u_svd is not None:
+            dist.append( compute_svd_error(W2, k, u_svd) )
+        i += 1
+        
+    u, s, _ = np.linalg.svd(W2, full_matrices = False)
+    s = np.sqrt(lamb / (1 - s**2))
+    end = time.time()
+    t = end - start
+    return (u, s, t, i, dist)
+
+# LAE-PCA using single weight matrix and gradient descent (Regularized Oja's Rule)
+def LAE_PCA_oja(W2, u_svd = None):
     W2 = W2.copy()
     start = time.time()
     XXt = X @ X.T
@@ -88,7 +114,7 @@ def LAE_PCA_Oja_GD(W2, u_svd = None):
     t = end - start
     return (u, s, t, i, dist)
 
-# iterative exact minimization
+# LAE-PCA using untied weight matrices and alternating Newton's method
 def LAE_PCA_exact(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
@@ -133,24 +159,29 @@ display('SVD', t, None, u_svd, s)
 (u, s, t) = randomized_svd_wrapper()
 display('Randomized SVD', t, None, u, s)
 
-(u, s, t, i2, _) = LAE_PCA_GD(W1, W2, None)
-display('LAE-PCA (GD)', t, i2, u, s)
+(u, s, t, i, _) = LAE_PCA_untied(W1, W2, None)
+display('LAE-PCA (untied)', t, i, u, s)
 
-(u, s, t, i3, _) = LAE_PCA_Oja_GD(W2, None)
-display('Regularized Oja\'s rule (GD)', t, i3, u, s)
+(u, s, t, i, _) = LAE_PCA_tied(W2, None)
+display('LAE-PCA (tied)', t, i, u, s)
 
-(u, s, t, i4, _) = LAE_PCA_exact(W1, W2, None)
-display('LAE-PCA (Exact)', t, i4, u, s)
+(u, s, t, i, _) = LAE_PCA_oja(W2, None)
+display('LAE-PCA (oja)', t, i, u, s)
+
+(u, s, t, i, _) = LAE_PCA_exact(W1, W2, None)
+display('LAE-PCA (exact)', t, i, u, s)
 
 # perform diagnostic runs
-(_ ,_ ,_ ,_ ,dist2) = LAE_PCA_GD(W1, W2, u_svd)
-(_ ,_ ,_ ,_ ,dist3) = LAE_PCA_Oja_GD(W2, u_svd)
-(_ ,_ ,_ ,_ ,dist4) = LAE_PCA_exact(W1, W2, u_svd)
+(_ ,_ ,_ ,_ ,dist2) = LAE_PCA_untied(W1, W2, u_svd)
+(_ ,_ ,_ ,_ ,dist3) = LAE_PCA_tied(W2, u_svd)
+(_ ,_ ,_ ,_ ,dist4) = LAE_PCA_oja(W2, u_svd)
+(_ ,_ ,_ ,_ ,dist5) = LAE_PCA_exact(W1, W2, u_svd)
 
-plt.plot(np.arange(len(dist2)), dist2)
-plt.plot(np.arange(len(dist3)), dist3)
-plt.plot(np.arange(len(dist4)), dist4)
-plt.legend(['LAE-PCA-GD', 'LAE-PCA-Oja-GD', 'LAE-PCA-Exact'])
+plt.plot(dist2)
+plt.plot(dist3)
+plt.plot(dist4)
+plt.plot(dist5)
+plt.legend(['LAE-PCA (untied)', 'LAE-PCA (tied)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel('Error in SVD factor U')
