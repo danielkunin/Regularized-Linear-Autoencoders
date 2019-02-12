@@ -23,7 +23,7 @@ principal_directions, s,  _ = np.linalg.svd(W2, full_matrices = False)
 eigenvalues = np.sqrt(lamb / (1 - s**2))
 ```
 
-This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape. For example, one can alternate between exact (convex) minimization with respect to `W1` fixing `W2` and then with respect to `W2` fixing `W1`. Or one can constrain `W2 = W1.T` *a priori* (see Appendix A):
+This may be accelerated on frameworks like TensorFlow using a host of math, hardware, sampling, and deep learning tricks, leveraging our topological and geometric understanding of the loss landscape. For example, one can alternate between exact (convex) minimization with respect to `W1` fixing `W2` and then with respect to `W2` fixing `W1`. Or one can constrain, or tie, `W2 = W1.T` *a priori* (see Appendix A):
 
 ```python
 XXt = X @ X.T
@@ -41,7 +41,7 @@ We call this version **regularized Oja's rule**, since without regularization th
 
 ### Visualization
 
-Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the m = 1, k = 1 case (scalar case) and the m = 2, k = 1 case.
+Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
 
 ### Project History
 
