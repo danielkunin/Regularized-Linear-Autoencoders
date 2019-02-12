@@ -48,7 +48,7 @@ We call this version **regularized Oja's rule**, since without regularization th
 Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
 
 <p align="center">
-    <img src="/img/visualization.gif" alt="visualization demo" width="250"/>
+    <img src="/img/visualization.gif" alt="visualization demo" width="400"/>
 </p>
 
 ### Project History
