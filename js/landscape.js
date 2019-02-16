@@ -105,7 +105,7 @@ function removeLandscape() {
 
 }
 
-function addLandscape(loss, data, lamb, mode) {
+function addLandscape(loss, x, lamb, pow) {
 
 	material = new THREE.MeshPhongMaterial( {
 					color: 0x156289,
@@ -117,7 +117,7 @@ function addLandscape(loss, data, lamb, mode) {
 				} )
 
 
-	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](data, lamb, mode, 4,4), 100, 100 );
+	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](x, lamb, pow, 4,4), 100, 100 );
 	geometry.verticesNeedUpdate = true;
 	object = new THREE.Mesh( geometry, material );
 	object.position.set( 0, 0, 0 );
@@ -128,7 +128,7 @@ function addLandscape(loss, data, lamb, mode) {
 
 THREE.ParametricGeometries = {
 
-	unregularized: function ( x, lamb, mode, width, height ) {
+	Unregularized: function ( x, lamb, pow, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -136,17 +136,17 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
-			if (mode == "1d") {
+			if (x.length == 1) {
 				var z = (x[0] - w2 * w1 * x[0])**2;
 			} else {
-				var z = (x[1] - w1**2 * x[1])**2 + (x[2] - w2**2 * x[2])**2;
+				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2;
 			}
 
 			target.set( w1, w2, z );
 		};
 	},
 
-	product: function ( x, lamb, mode, width, height ) {
+	Product: function ( x, lamb, pow, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -154,17 +154,17 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
-			if (mode == "1d") {
-				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * (w2 * w1)**2;
+			if (x.length == 1) {
+				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
 			} else {
-				var z = (x[1] - w1**2 * x[1])**2 + (x[2] - w2**2 * x[2])**2 + lamb * (w1**4 + 2 *(w1 * w2)**2 + w2**4);
+				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + lamb * (w1**4 + 2 *(w1 * w2)**2 + w2**4);
 			}
 
 			target.set( w1, w2, z );
 		};
 	},
 
-	sum: function ( x, lamb, mode, width, height ) {
+	Sum: function ( x, lamb, pow, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -173,10 +173,10 @@ THREE.ParametricGeometries = {
 			var w1 = u * width;
 			var w2 = v * height;
 
-			if (mode == "1d") {
-				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * (w1**2 + w2**2);
+			if (x.length == 1) {
+				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			} else {
-				var z = (x[1] - w1**2 * x[1])**2 + (x[2] - w2**2 * x[2])**2 + 2 * lamb * (w1**2 + w2**2);
+				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + 2 * lamb * (w1**2 + w2**2);
 			}
 
 			target.set( w1, w2, z );
@@ -185,53 +185,58 @@ THREE.ParametricGeometries = {
 
 };
 
-var loss = "unregularized",
-	data = [1, 1, 1],
-	lamb = 0.5,
-	mode = "1d";
-addLandscape(loss, data, lamb, mode);
 
 
-$("input[name=loss]").on("change", function() {
-	loss = $(this).val();
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
+var scalar = function() {
+  this.loss = 'Unregularized',
+  this.x = 1,
+  this.lamb = 0.5,
+  this.pow = 2,
+  this.critical = false
+};
 
-$("#lamb").on("input", function() {
-	lamb = $(this).val();
-	$("#lamb-val").text(lamb);
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
+var vector = function() {
+  this.loss = 'Unregularized',
+  this.x1 = 1,
+  this.x2 = 1,
+  this.lamb = 0.5,
+  this.pow = 2,
+  this.critical = false
+};	
 
-$("#cases").on("change", function() {
-	$(".data").toggle()
-	mode = $(this).val()
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
 
-$("#data").on("input", function() {
-	data[0] = $(this).val();
-	$("#data-val").text(data);
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
+window.onload = function() {
+	var gui = new dat.GUI();
+	var f1 = gui.addFolder('Scalar Case (m=1, k=1)');
+	var f2 = gui.addFolder('Vector Case (m=2, k=1)');
+	
+	var obj1 = new scalar();
+	var graph1 = function() {
+		removeLandscape();
+		addLandscape(obj1.loss, [obj1.x], obj1.lamb, obj1.pow);
+		f2.close();
+	}
+	f1.add(obj1, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph1).name('Loss Function');
+	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x'));
+	f1.add(obj1, 'lamb', 0, 2).onChange(graph1).name(katex.renderToString('\\lambda'));
+	f1.add(obj1, 'pow', 0.5, 4).onChange(graph1).name(katex.renderToString('\\alpha'));
+	f1.add(obj1, 'critical').onChange(graph1).name('Critical Points');
 
-$("#singular1").on("input", function() {
-	data[1] = $(this).val();
-	$("#singular1-val").text(data);
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
+	var obj2 = new vector();
+	var graph2 = function() {
+		removeLandscape();
+		addLandscape(obj2.loss, [obj2.x1, obj2.x2], obj2.lamb, obj1.pow);
+		f1.close();
+	}
+	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
+	f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1'));
+	f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2'));
+	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 
-$("#singular2").on("input", function() {
-	data[2] = $(this).val();
-	$("#singular2-val").text(data);
-	removeLandscape();
-	addLandscape(loss, data, lamb, mode);
-});
+	graph1();
+	f1.open();
+};
+
 
 // TO DO:
 // - Update geometry vertices rather than creating new one for updates to lamb/data
