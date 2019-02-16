@@ -12,7 +12,6 @@
 	</head>
 	<style type="text/css">
 		body {
-			color: #eee;
 			margin: 0px;
 			padding: 0px;
 			overflow: hidden;
@@ -27,36 +26,26 @@
 		}
 
 	</style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.css" integrity="sha384-TEMocfGvRuD1rIAacqrknm5BQZ7W7uWitoih+jMNFXQIbNl16bO8OZmylH/Vi/Ei" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.9.0/dist/katex.min.js" integrity="sha384-jmxIlussZWB7qCuB+PgKG1uLjjxbVVIayPJwi6cG6Zb4YKq0JIw+OMnkkEC7kYCq" crossorigin="anonymous"></script>
 	<body>
 
 		<div id="container"></div>
 		<div id="info">
 			<h1>Loss Landscapes of Regularized Linear Autoencoders</h1>
 			<h4>Daniel Kunin, Jonathan M. Bloom, Aleksandrina Goeva, Cotton Seed</h4>
-			<p>An interactive visualization of the three loss functions.</p>
-			<input type="radio" name="loss" value="unregularized" checked> Unregularized<br>
-			<input type="radio" name="loss" value="product"> Product<br>
-			<input type="radio" name="loss" value="sum"> Sum<br>
-			<input type="range" min="0" max="2" value="0.5" step="0.1" id="lamb">Lambda = <span id="lamb-val">0.5</span><br>
-
-			<select id="cases">
-				<option value="1d">m = 1, k = 1, untied weights</option>
-				<option value="2d">m = 2, k = 1, tied weights</option>
-			</select>
-			<div id="1d" class="data">
-				<input type="range" min="0" max="2" value="1" step="0.1" id="data">X = <span id="data-val">1</span>
-			</div>
-			<div id="2d" class="data" style="display:none">
-				<input type="range" min="0" max="2" value="1" step="0.1" id="singular1">x1 = <span id="singular1-val">1</span><br>
-				<input type="range" min="0" max="2" value="1" step="0.1" id="singular2">x2 = <span id="singular2-val">1</span>
-			</div>
+			<p>Scalar Case:</p>
+			<script>
+                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (x - w_2w_1x)^2 \\cr  \\text{Product: } & (x - w_2w_1x)^2 + \\lambda(w_2 w_1)^\\alpha \\cr \\text{Sum: } & (x - w_2w_1x)^2 + \\lambda \\left( w_2^\\alpha + w_1^\\alpha \\right )  \\end{aligned}", { displayMode: true });
+                document.writeln(render);
+            </script>
+            <p>Vector Case:</p>
 		</div>
-
-		<script src="js/jquery.js"></script>
 		<script src="js/three/three.js"></script>
 		<script src="js/three/Detector.js"></script>
 		<script src="js/three/controls/OrbitControls.js"></script>
 		<script src="js/text.js"></script>
+		<script src="js/dat.gui.min.js"></script>
 		<script src="js/landscape.js"></script>
 	</body>
 </html>
