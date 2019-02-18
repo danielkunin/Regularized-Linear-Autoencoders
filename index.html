@@ -32,7 +32,7 @@
 			background-color: #1A1A1A;
 		}
 		.controls {
-			margin: 4px auto;
+			margin: 3.5px auto;
 			text-align: center;
 			cursor: pointer;
 		}
@@ -60,14 +60,14 @@
 	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (x - w_2w_1x)^2 \\cr  \\text{Product: } & (x - w_2w_1x)^2 + \\lambda|w_2 w_1|^\\alpha \\cr \\text{Sum: } & (x - w_2w_1x)^2 + \\lambda \\left( |w_2|^\\alpha + |w_1|^\\alpha \\right )  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
-            	<p>In the vector case <script>document.write(katex.renderToString('W, X \\in \\mathbb{R}^2'));</script> defined as</p>
+            	<p>In the vector case <script>document.write(katex.renderToString('W, X \\in \\mathbb{R}^2'));</script> are defined as</p>
 	            <script>
 	                var render = katex.renderToString("W = \\begin{bmatrix} w_1 \\cr w_2 \\end{bmatrix}\\qquad X = \\begin{bmatrix} x_1 \\cr x_2 \\end{bmatrix} ", { displayMode: true });
 	                document.writeln(render);
 	            </script>
 	            <p>and the loss functions are:</p>
 	            <script>
-	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & ||X - WW^\\intercal X||^2_F \\cr  \\text{Product: } & ||X - WW^\\intercal X||^2_F + \\lambda||WW^\\intercal||^2_F\\cr \\text{Sum: } & ||X - WW^\\intercal X||^2_F + 2\\lambda ||W||^2_F  \\end{aligned}", { displayMode: true });
+	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & ||X - WW^\\intercal X||^2_F \\cr  \\text{Product: } & ||X - WW^\\intercal X||^2_F + \\lambda|WW^\\intercal|^\\alpha\\cr \\text{Sum: } & ||X - WW^\\intercal X||^2_F + 2\\lambda |W|^\\alpha  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
             </div>
