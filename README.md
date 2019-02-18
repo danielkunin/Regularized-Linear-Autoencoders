@@ -59,9 +59,9 @@ From Principal Subspaces to Principal Components with Linear Autoencoders](https
 
 ### Computational Neuroscience
 
-In response to v1 of the preprint, [Yoshua Bengio](http://www.iro.umontreal.ca/~bengioy/yoshua_en/) wrote us that "the question of obtaining the transpose is actually pretty important for research on a biologically plausible version of backprop, because if you obtain approximate transposes, then several local learning rules give rise to gradient estimator analogues of backprop." He also pointed us to his wonderful paper [Towards Biologically Plausible Deep Learning](https://arxiv.org/pdf/1502.04156.pdf) and related work with [Benjamin Scellier](https://mila.quebec/en/person/benjamin-scellier/).
+In response to v1 of the preprint, [Yoshua Bengio](http://www.iro.umontreal.ca/~bengioy/yoshua_en/) wrote us that "the question of obtaining the transpose is actually pretty important for research on a biologically plausible version of backprop, because if you obtain approximate transposes, then several local learning rules give rise to gradient estimator analogues of backprop." He pointed us to his related papers [Towards Biologically Plausible Deep Learning](https://arxiv.org/pdf/1502.04156.pdf) and [Equivalence of Equilibrium Propagation and Recurrent Backpropagation](https://arxiv.org/abs/1711.08416).
 
-We also found [How Important Is Weight Symmetry in Backpropagation?](https://arxiv.org/pdf/1510.05067.pdf) by Poggio et. al., which calls the "weight symmetry problem [...] arguably the crux of BP’s biological implausibility." We recommend reading the full introduction. Discussing the issue with neuroscientist [Dan Bear](http://neuroailab.stanford.edu/people.html), we believe our work suggests a simple, plausible, and testable solution to the weight symmetry problem. Dan was kind enough to elaborate on this perspective as follows:
+We also found [How Important Is Weight Symmetry in Backpropagation?](https://arxiv.org/pdf/1510.05067.pdf) by Poggio et. al., which calls the "weight symmetry problem [...] arguably the crux of BP’s biological implausibility," as well as the 2018 review [Theories of Error Back-Propagation in the Brain](https://www.cell.com/trends/cognitive-sciences/fulltext/S1364-6613(19)30012-9). Discussing the issue with neuroscientist [Dan Bear](http://neuroailab.stanford.edu/people.html), we believe our work suggests a simple, plausible, and testable solution to the weight symmetry problem. Dan was kind enough to elaborate on this perspective as follows:
 
 Deep Neural Networks (DNNs) are algorithms that apply a sequence of linear and nonlinear transformations to each input data point, such as an image represented by a matrix of RGB pixel values. DNNs are now widely used in computer vision because they make useful visual information more explicit: for instance, it's hard or impossible to tell what type of object is in an image by training a linear classifier on its pixels or even on the outputs of a shallow neural network; but DNNs can be optimized to perform this sort of "difficult" visual task. 
 
@@ -90,8 +90,10 @@ Reading on DNNs and the primate visual system:
 https://papers.nips.cc/paper/7775-task-driven-convolutional-recurrent-models-of-the-visual-system.pdf
 https://www.nature.com/articles/nn.4244
 
-Clear explanation of Backprop and why it requires the transpose of the forward weight matrix:
+Clear explanation of backpropogation and why it requires the transpose of the forward weight matrix:
 http://neuralnetworksanddeeplearning.com/chap2.html
 
 Olshausen and Field:
 https://www.nature.com/articles/381607a0
+
+
