@@ -14,7 +14,7 @@ function init() {
 	scene.background = new THREE.Color( "white" );
 
 	camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
-	camera.position.set( 0, -20, 35 );
+	camera.position.set( -25, -25, 20 );
 	camera.up.set( 0, 0, 1 );
 
 	var group = new THREE.Group();
@@ -140,7 +140,7 @@ THREE.ParametricGeometries = {
 			if (x.length == 1) {
 				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
 			} else {
-				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + lamb * (w1**4 + 2 *(w1 * w2)**2 + w2**4);
+				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
 			}
 
 			target.set( w1, w2, z );
@@ -159,7 +159,7 @@ THREE.ParametricGeometries = {
 			if (x.length == 1) {
 				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			} else {
-				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + 2 * lamb * (w1**2 + w2**2);
+				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			}
 
 			target.set( w1, w2, z );
@@ -172,15 +172,15 @@ THREE.ParametricGeometries = {
 
 var scalar = function() {
   this.loss = 'Unregularized',
-  this.x = 1,
+  this.x = 0.5,
   this.lamb = 0.5,
   this.pow = 2
 };
 
 var vector = function() {
   this.loss = 'Unregularized',
-  this.x1 = 1,
-  this.x2 = 1,
+  this.x1 = 0.5,
+  this.x2 = 0.5,
   this.lamb = 0.5,
   this.pow = 2
 };	
@@ -205,13 +205,14 @@ window.onload = function() {
 	var obj2 = new vector();
 	var graph2 = function() {
 		removeLandscape();
-		addLandscape(obj2.loss, [obj2.x1, obj2.x2], obj2.lamb, obj1.pow);
+		addLandscape(obj2.loss, [obj2.x1, obj2.x2], obj2.lamb, obj2.pow);
 		f1.close();
 	}
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
 	f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1'));
 	f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2'));
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
+	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
 	graph1();
 	f1.open();
