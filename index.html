@@ -15,11 +15,32 @@
 			margin: 0px;
 			padding: 0px;
 			overflow: hidden;
+			font-family: Lucida Grande;
+			font-size: 11px;
 		}
 		#info {
 			position: absolute;
-			top: 0px; width: 25%;
-			padding: 10px;
+			top: 0px; width: 300px;
+			margin-left: 15px;
+			background-color: black;
+			color: white;
+			background-color: black;
+			color: white;
+		}
+		#content {
+			border-bottom: 1px solid rgba(255,255,255,0.2);
+			background-color: #1A1A1A;
+		}
+		.controls {
+			margin: 4px auto;
+			text-align: center;
+			cursor: pointer;
+		}
+		p {
+			margin: 10px;
+		}
+		a {
+			color: white;
 		}
 		#container {
 			cursor: move;
@@ -32,14 +53,30 @@
 
 		<div id="container"></div>
 		<div id="info">
-			<h1>Loss Landscapes of Regularized Linear Autoencoders</h1>
-			<h4>Daniel Kunin, Jonathan M. Bloom, Aleksandrina Goeva, Cotton Seed</h4>
-			<p>Scalar Case:</p>
-			<script>
-                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (x - w_2w_1x)^2 \\cr  \\text{Product: } & (x - w_2w_1x)^2 + \\lambda(w_2 w_1)^\\alpha \\cr \\text{Sum: } & (x - w_2w_1x)^2 + \\lambda \\left( w_2^\\alpha + w_1^\\alpha \\right )  \\end{aligned}", { displayMode: true });
-                document.writeln(render);
-            </script>
-            <p>Vector Case:</p>
+			<div id="content" style="display: none">
+				<p>This is an interactive visualization of the loss landscapes described in <a href="https://github.com/danielkunin/Regularized-Linear-Autoencoders">Loss Landscapes of Regularized Linear Autoencoders</a>.</p>
+				<p>In the scalar case <script>document.write(katex.renderToString('w_1,w_2,x \\in \\mathbb{R}'));</script> and the loss functions are:</p>
+				<script>
+	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (x - w_2w_1x)^2 \\cr  \\text{Product: } & (x - w_2w_1x)^2 + \\lambda|w_2 w_1|^\\alpha \\cr \\text{Sum: } & (x - w_2w_1x)^2 + \\lambda \\left( |w_2|^\\alpha + |w_1|^\\alpha \\right )  \\end{aligned}", { displayMode: true });
+	                document.writeln(render);
+	            </script>
+            	<p>In the vector case <script>document.write(katex.renderToString('W, X \\in \\mathbb{R}^2'));</script> defined as</p>
+	            <script>
+	                var render = katex.renderToString("W = \\begin{bmatrix} w_1 \\cr w_2 \\end{bmatrix}\\qquad X = \\begin{bmatrix} x_1 \\cr x_2 \\end{bmatrix} ", { displayMode: true });
+	                document.writeln(render);
+	            </script>
+	            <p>and the loss functions are:</p>
+	            <script>
+	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & ||X - WW^\\intercal X||^2_F \\cr  \\text{Product: } & ||X - WW^\\intercal X||^2_F + \\lambda||WW^\\intercal||^2_F\\cr \\text{Sum: } & ||X - WW^\\intercal X||^2_F + 2\\lambda ||W||^2_F  \\end{aligned}", { displayMode: true });
+	                document.writeln(render);
+	            </script>
+            </div>
+            <div class="controls" id="open">
+				Open Explanation
+			</div>
+			<div class="controls" id="close" style="display: none">
+				Close Explanation
+			</div>
 		</div>
 		<script src="js/three/three.js"></script>
 		<script src="js/three/Detector.js"></script>
@@ -47,6 +84,18 @@
 		<script src="js/text.js"></script>
 		<script src="js/dat.gui.min.js"></script>
 		<script src="js/landscape.js"></script>
+		<script type="text/javascript">
+			document.getElementById("open").addEventListener("click", function(){
+				document.getElementById("content").style.display = "block";
+				document.getElementById("open").style.display = "none";
+				document.getElementById("close").style.display = "block";
+			});
+			document.getElementById("close").addEventListener("click", function(){
+				document.getElementById("content").style.display = "none";
+				document.getElementById("open").style.display = "block";
+				document.getElementById("close").style.display = "none";
+			});
+		</script>
 	</body>
 </html>
 
