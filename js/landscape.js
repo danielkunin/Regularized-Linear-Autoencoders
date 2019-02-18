@@ -10,23 +10,15 @@ function init() {
 
 	var container = document.getElementById( 'container' );
 
-	//
-
 	scene = new THREE.Scene();
-	scene.background = new THREE.Color( 0xb0b0b0 );
-
-	//
+	scene.background = new THREE.Color( "white" );
 
 	camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
-	camera.position.set( 0, -30, 30 );
+	camera.position.set( 0, -20, 35 );
 	camera.up.set( 0, 0, 1 );
-
-	//
 
 	var group = new THREE.Group();
 	scene.add( group );
-
-	//
 
 	var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.6 );
 	directionalLight.position.set( 0.75, 0.75, 1.0 ).normalize();
@@ -35,34 +27,24 @@ function init() {
 	var ambientLight = new THREE.AmbientLight( 0xcccccc, 0.2 );
 	scene.add( ambientLight );
 
-	//
-
-	var helper = new THREE.GridHelper( 16, 10 );
+	var helper = new THREE.GridHelper( 20, 10 );
 	helper.rotation.x = Math.PI / 2;
 	helper.position.set( 0, 0, 0 );
 	group.add( helper );
 
-	//
-
 	var w1 = makeTextSprite( "w1", { fontsize: 20 } );
 	var w2 = makeTextSprite( "w2", { fontsize: 20 } );
-	w1.position.set(-10,0,0);
-	w2.position.set(0,-10,0);
+	w1.position.set(-12,0,0);
+	w2.position.set(0,-12,0);
 	group.add( w1 );
 	group.add( w2 );
-
-	//
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
 
-	//
-
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-	//
 
 	window.addEventListener( 'resize', onWindowResize, false );
 
@@ -95,13 +77,16 @@ function render() {
 }
 
 
-
-
 var geometry, object, material;
 
 function removeLandscape() {
 
-	scene.remove(object); 
+	scene.remove(object);
+	if (object != undefined) {
+		object.geometry.dispose();
+		object.material.dispose();
+		object = undefined;
+	} 
 
 }
 
@@ -114,17 +99,15 @@ function addLandscape(loss, x, lamb, pow) {
 					flatShading: true,
 					transparent: true,
 					opacity: 0.8
-				} )
-
-
-	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](x, lamb, pow, 4,4), 100, 100 );
-	geometry.verticesNeedUpdate = true;
+				} );
+	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](x, lamb, pow, 4,4), 75, 75 );
 	object = new THREE.Mesh( geometry, material );
 	object.position.set( 0, 0, 0 );
-	object.scale.multiplyScalar( 4 );
+	object.scale.multiplyScalar( 5 );
 
 	scene.add( object );
 }
+
 
 THREE.ParametricGeometries = {
 
@@ -191,8 +174,7 @@ var scalar = function() {
   this.loss = 'Unregularized',
   this.x = 1,
   this.lamb = 0.5,
-  this.pow = 2,
-  this.critical = false
+  this.pow = 2
 };
 
 var vector = function() {
@@ -200,8 +182,7 @@ var vector = function() {
   this.x1 = 1,
   this.x2 = 1,
   this.lamb = 0.5,
-  this.pow = 2,
-  this.critical = false
+  this.pow = 2
 };	
 
 
@@ -220,7 +201,6 @@ window.onload = function() {
 	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x'));
 	f1.add(obj1, 'lamb', 0, 2).onChange(graph1).name(katex.renderToString('\\lambda'));
 	f1.add(obj1, 'pow', 0.5, 4).onChange(graph1).name(katex.renderToString('\\alpha'));
-	f1.add(obj1, 'critical').onChange(graph1).name('Critical Points');
 
 	var obj2 = new vector();
 	var graph2 = function() {
@@ -236,17 +216,3 @@ window.onload = function() {
 	graph1();
 	f1.open();
 };
-
-
-// TO DO:
-// - Update geometry vertices rather than creating new one for updates to lamb/data
-// - Simplify jquery event listeners
-// - Add critical points
-// - Add axis labels
-// - why do X, x1 and x2 show three numbers with commas?
-// - use lowercase and subscript: x, x_1, x_2, w_1, w_2. Use symbol for lambda instead 
-// - white on grey is not so easy to read, perhaps go dark with the text and even lighter on background?
-// - with tied weights, w_1 and w_2 is confusing. maybe w_11 and w_12?
-// - could you include the lose function itself to set notation, with the regularization term changing when you toggle between the models? that will make it far more self-contained.
-// - i don't like how "An interactive visualization of the three loss functions." has last word on separate line
-// - add cross-links from .io to .com and vice versa
