@@ -96,4 +96,10 @@ http://neuralnetworksanddeeplearning.com/chap2.html
 Olshausen and Field:
 https://www.nature.com/articles/381607a0
 
+### Background
 
+Wikipedia has articles on [PCA](https://en.wikipedia.org/wiki/Principal_component_analysis), [SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition), [autoencoders](https://en.wikipedia.org/wiki/Autoencoder), [regularization](https://en.wikipedia.org/wiki/Regularization_(mathematics)), [orthogonality](https://en.wikipedia.org/wiki/Orthogonal_matrix), [definiteness](https://en.wikipedia.org/wiki/Definiteness_of_a_matrix), and [matrix calculus](https://en.wikipedia.org/wiki/Matrix_calculus), [Grassmannians](https://en.wikipedia.org/wiki/Grassmannian), [CW complexes](https://en.wikipedia.org/wiki/CW_complex), [cellular homology](https://en.wikipedia.org/wiki/Cellular_homology), [Morse theory](https://en.wikipedia.org/wiki/Morse_theory), [Morse homology](https://en.wikipedia.org/wiki/Morse_homology), and [random matrix theory](https://en.wikipedia.org/wiki/Random_matrix).
+
+For a rigorous treatments of Morse theory, see Jon's [review](http://www.math.harvard.edu/theses/phd/bloom/ThesisXFinal.pdf) of smooth manifolds and Morse theory, Milnor's classic [Morse Theory](https://www.maths.ed.ac.uk/~v1ranick/papers/milnmors.pdf),  [Morse Homology](https://www.springer.com/us/book/9781402026959), and Chen's [history](https://math.berkeley.edu/~alanw/240papers03/chen.pdf) of the field through Thom, Smale, Milnor and Wittin. These are complemented by the development of simplicial, singular, and CW homology in Hatcher's [Algebraic Topology](http://pi.math.cornell.edu/~hatcher/AT/AT.pdf).
+
+Jon's fantasizes that his work on extending [Morse homotopy to manifolds with boundary](https://arxiv.org/abs/1212.6467) will be soon be useful as well.
