@@ -7,6 +7,12 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
+### Talk
+
+We presented our work on February 27, 2019 at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the Broad Institute of MIT and Harvard.
+
+[![MIA Meeting](https://img.youtube.com/vi/1mvwCmqd6zQ/0.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS "MIA Meeting")
+
 ### LAE-PCA Algorithms
 
 Here's a simple gradient descent algorithm for LAE-PCA with **untied** weights (i.e. there is no constraint on `W1` or `W2`):
@@ -97,7 +103,7 @@ Wikipedia has articles on [PCA](https://en.wikipedia.org/wiki/Principal_componen
 
 For a rigorous treatments of Morse theory, see Jon's [review](http://www.math.harvard.edu/theses/phd/bloom/ThesisXFinal.pdf) of smooth manifolds and Morse theory, Milnor's classic [Morse Theory](https://www.maths.ed.ac.uk/~v1ranick/papers/milnmors.pdf), Banyaga and Hurtubise's [Lectures on Morse Homology](https://www.springer.com/us/book/9781402026959), and Chen's [history](https://math.berkeley.edu/~alanw/240papers03/chen.pdf) of the field through Thom, Smale, Milnor and Wittin. These works are complemented by the development of simplicial, singular, and CW homology in Hatcher's [Algebraic Topology](http://pi.math.cornell.edu/~hatcher/AT/AT.pdf).
 
-Jon's fantasizes that [extending Morse homotopy to manifolds with boundary](https://arxiv.org/abs/1212.6467) may one day be useful as well...
+Jon fantasizes that [extending Morse homotopy to manifolds with boundary](https://arxiv.org/abs/1212.6467) may one day be useful as well...
 
 ### Project History
 
