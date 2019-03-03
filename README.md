@@ -13,7 +13,7 @@ We presented our work on February 27, 2019 at the [Models, Inference and Algorit
 
 [![MIA Primer](https://img.youtube.com/vi/1mvwCmqd6zQ/0.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS "MIA Primer")
 
-[![MIA Primer](https://img.youtube.com/vi/1mvwCmqd6zQ/3480.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s "MIA Seminar")
+[![MIA Seminar](https://img.youtube.com/vi/1mvwCmqd6zQ/0.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s "MIA Seminar")
 
 ### LAE-PCA Algorithms
 
