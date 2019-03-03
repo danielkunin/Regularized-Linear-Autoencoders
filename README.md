@@ -11,6 +11,11 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 We presented our work on February 27, 2019 at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the Broad Institute of MIT and Harvard: [Primer](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS), [Seminar](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s).
 
+<p align="center">
+    <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="/img/primer.png" alt="MIA Primer" width="400"/></a>
+    <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
+</p>
+
 ### LAE-PCA Algorithms
 
 Here's a simple gradient descent algorithm for LAE-PCA with **untied** weights (i.e. there is no constraint on `W1` or `W2`):
