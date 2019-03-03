@@ -9,7 +9,7 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### Talks
 
-We're excited to share joint talks given on February 27, 2019 at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the Broad Institute of MIT and Harvard.
+We're excited to a primer and seminar given jointly at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the Broad Institute of MIT and Harvard.
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="/img/primer.png" alt="MIA Primer" width="400"/></a>
