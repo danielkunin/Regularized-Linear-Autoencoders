@@ -55,7 +55,7 @@ The four variants of the LAE-PCA algorithm described above and runnable examples
 
 ### Visualization
 
-Here is an interactive [visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
+We've created an [interactive visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
 
 <p align="center">
     <img src="/img/visualization.gif" alt="visualization demo" width="400"/>
