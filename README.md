@@ -7,11 +7,13 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
-### Talk
+### Talks
 
 We presented our work on February 27, 2019 at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the Broad Institute of MIT and Harvard.
 
-[![MIA Meeting](https://img.youtube.com/vi/1mvwCmqd6zQ/0.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS "MIA Meeting")
+[![MIA Primer](https://img.youtube.com/vi/1mvwCmqd6zQ/0.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS "MIA Primer")
+
+[![MIA Primer](https://img.youtube.com/vi/1mvwCmqd6zQ/3480.jpg)](https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s "MIA Seminar")
 
 ### LAE-PCA Algorithms
 
