@@ -9,14 +9,14 @@ Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstit
 
 ### Talks
 
-We're excited to share a primer and seminar given by all four authors at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the [Broad Institute of MIT and Harvard](https://www.broadinstitute.org/).
+We're excited to share a primer and seminar given by all four authors at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the [Broad Institute of MIT and Harvard](https://www.broadinstitute.org/) on February 27, 2019.
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="/img/primer.png" alt="MIA Primer" width="400"/></a>
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
 </p>
 
-Here are [slides](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing) from a presentation at Google Brain on March 6, 2019. Video forthcoming.
+Here are [slides](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing) from a talk to Google Brain CAM/SF/MTV/MON on March 6, 2019. Video forthcoming.
 
 ### LAE-PCA Algorithms
 
