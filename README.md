@@ -16,6 +16,8 @@ We're excited to share a primer and seminar given by all four authors at the [Mo
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
 </p>
 
+Here are [slides](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing) from a presentation at Google Brain, video forthcoming.
+
 ### LAE-PCA Algorithms
 
 Here's a simple gradient descent algorithm for LAE-PCA with **untied** weights (i.e. there is no constraint on `W1` or `W2`):
