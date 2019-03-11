@@ -5,7 +5,7 @@ Autoencoders are a deep learning model for representation learning. When trained
 
 [Paper](https://arxiv.org/pdf/1901.08168.pdf), [Talks](https://github.com/danielkunin/Regularized-Linear-Autoencoders#talks), [Code](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/Loss%20Landscapes%20of%20Regularized%20Linear%20Autoencoders%20Code.ipynb), [Algorithms](https://github.com/danielkunin/Regularized-Linear-Autoencoders#lae-pca-algorithms), [Visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/), [Neuroscience](https://github.com/danielkunin/Regularized-Linear-Autoencoders#computational-neuroscience), [Resources](https://github.com/danielkunin/Regularized-Linear-Autoencoders#useful-resources), [History](https://github.com/danielkunin/Regularized-Linear-Autoencoders#project-history), [Clarification and Erratum](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/erratum.md).
 
-Feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
+Updated v2 coming soon, feedback welcome! Contact Daniel and Jon: kunin@stanford.edu, jbloom@broadinstitute.org
 
 ### Talks
 
