@@ -16,7 +16,7 @@ We're excited to share a primer and seminar given by all four authors at the [Mo
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
 </p>
 
-We're also grateful to Google Brain for filming our talk on March 6, 2019 to share online. Slides are [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
+We're also grateful to [Google Brain](https://ai.google/research/teams/brain) for filming our talk on March 6, 2019 to share online. Video below, slides [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=3aqB_n087cE&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/3aqB_n087cE/0.jpg" alt="Google Brain" width="400"/></a>
