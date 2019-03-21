@@ -132,22 +132,29 @@ def LAE_PCA_oja(W2, u_svd = None):
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using untied weight matrices and alternating exact minimization
-def LAE_PCA_exact(W1, W2, u_svd = None):
+def LAE_PCA_exact(W1, W2, synced = False, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
     timer = t_timer()
     XXt = X @ X.T
+    diff = np.inf
     i = 0
-    while np.linalg.norm(W1 - W2.T) > eps:
-        coefficient_matrix = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
-        np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
-        W1 = scipy.linalg.solve(coefficient_matrix, (W2.T @ XXt).reshape((m*k, 1)), assume_a = 'pos').reshape((k, m))
+    while diff > eps:
+        if not synced:
+            coefficient_matrix = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
+            np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
+            W1 = scipy.linalg.solve(coefficient_matrix, (W2.T @ XXt).reshape((m*k, 1)), assume_a = 'pos').reshape((k, m))
         
         right_hand_side = W1 @ XXt
         coefficient_matrix = right_hand_side @ W1.T
         np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
         W2 = scipy.linalg.solve(coefficient_matrix, right_hand_side, assume_a = 'pos').T
+        
+        diff = np.linalg.norm(W1 - W2.T)
+        
+        if synced:
+            W1 = W2.T
         
         if u_svd is not None:
             timer.lap()
@@ -162,6 +169,8 @@ def LAE_PCA_exact(W1, W2, u_svd = None):
     return (u, s, t, i, dist, times)
 
 
+
+
 def display(method, t, i, u, s):
     if i == None:
         print('{:s} ({:0.5f} secs)'.format(method, t))
@@ -171,10 +180,11 @@ def display(method, t, i, u, s):
     print(u[:, 0:k])
 
 
-algorithms = [('LAE-PCA (untied)', LAE_PCA_untied, [W1,W2]),
-              ('LAE-PCA (sync)',   LAE_PCA_sync,   [W2]),
-              ('LAE-PCA (oja)',    LAE_PCA_oja,    [W2]),
-              ('LAE-PCA (exact)',  LAE_PCA_exact,  [W1,W2])]
+algorithms = [('LAE-PCA (GD-untied)',          LAE_PCA_untied, [W1, W2]),
+              ('LAE-PCA (GD-sync)',            LAE_PCA_sync,   [W2]),
+              ('LAE-PCA (GD-oja)',             LAE_PCA_oja,    [W2]),
+              ('LAE-PCA (exact-alternating)',  LAE_PCA_exact,  [W1, W2, False]),
+              ('LAE-PCA (exact-sync)',         LAE_PCA_exact,  [W1, W2, True])]
 
 # perform timing runs
 (u_svd, s, t) = svd()
