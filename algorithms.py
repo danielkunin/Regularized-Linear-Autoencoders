@@ -20,6 +20,19 @@ X = X - np.mean(X, axis=1, keepdims=True)
 W1 = np.random.normal(size = (k, m))
 W2 = np.random.normal(size = (m, k))
 
+class t_timer:
+    def __init__(self):
+        self.times = []
+        self.start = time.time()
+    def lap(self):
+        end = time.time()
+        self.times.append(end - self.start)
+    def reset(self):
+        self.start = time.time()
+    def total(self):
+        end = time.time()
+        return np.sum(self.times) + end - self.start
+        
 def compute_svd_error(W2, k, u_svd):
     dist = 0;
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
@@ -29,18 +42,16 @@ def compute_svd_error(W2, k, u_svd):
 
 # SVD with dgesdd (divide and conquer)
 def svd():
-    start = time.time()
+    timer = t_timer()
     u, s, _ = np.linalg.svd(X, full_matrices = False)
-    end = time.time()
-    t = end - start
+    t = timer.total()
     return (u, s, t)
 
 # Randomized SVD
 def randomized_svd_wrapper():
-    start = time.time()
+    timer = t_timer()
     u, s, _ = randomized_svd(X, 2)
-    end = time.time()
-    t = end - start
+    t = timer.total()
     return (u, s, t)
 
 # LAE-PCA using untied weights and gradient descent
@@ -48,8 +59,7 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
-    times = []
-    start = time.time()
+    timer = t_timer()
     XXt = X @ X.T
     i = 0
     while np.linalg.norm(W1 - W2.T) > eps:
@@ -57,16 +67,15 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
         W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
         
         if u_svd is not None:
-            end = time.time()
+            timer.lap()
             dist.append( compute_svd_error(W2, k, u_svd) )
-            times.append(end - start)
-            start = time.time()
+            timer.reset()
         i += 1
         
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
     s = np.sqrt(lamb / (1 - s**2))
-    end = time.time()
-    t = end - start
+    times = timer.times
+    t = timer.total()
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using synchronized weights at initialization and gradient descent
@@ -74,8 +83,7 @@ def LAE_PCA_sync(W2, u_svd = None):
     W1 = W2.copy().T
     W2 = W2.copy()
     dist = []
-    times = []
-    start = time.time()
+    timer = t_timer()
     XXt = X @ X.T
     diff = np.inf
     i = 0
@@ -87,24 +95,22 @@ def LAE_PCA_sync(W2, u_svd = None):
         diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
         
         if u_svd is not None:
-            end = time.time()
+            timer.lap()
             dist.append( compute_svd_error(W2, k, u_svd) )
-            times.append(end - start)
-            start = time.time()
+            timer.reset()
         i += 1
         
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
     s = np.sqrt(lamb / (1 - s**2))
-    end = time.time()
-    t = end - start
+    times = timer.times
+    t = timer.total()
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using single weight matrix and gradient descent (Regularized Oja's Rule)
 def LAE_PCA_oja(W2, u_svd = None):
     W2 = W2.copy()
     dist = []
-    times = []
-    start = time.time()
+    timer = t_timer()
     XXt = X @ X.T
     diff = np.inf
     i = 0
@@ -114,16 +120,15 @@ def LAE_PCA_oja(W2, u_svd = None):
         diff = np.linalg.norm(update)
         
         if u_svd is not None:
-            end = time.time()
+            timer.lap()
             dist.append( compute_svd_error(W2, k, u_svd) )
-            times.append(end - start)
-            start = time.time()
+            timer.reset()
         i += 1
         
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
     s = np.sqrt(lamb / (1 - s**2))
-    end = time.time()
-    t = end - start
+    times = timer.times
+    t = timer.total()
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using untied weight matrices and alternating exact minimization
@@ -131,8 +136,7 @@ def LAE_PCA_exact(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
-    times = []
-    start = time.time()
+    timer = t_timer()
     XXt = X @ X.T
     i = 0
     while np.linalg.norm(W1 - W2.T) > eps:
@@ -146,16 +150,15 @@ def LAE_PCA_exact(W1, W2, u_svd = None):
         W2 = scipy.linalg.solve(coefficient_matrix, right_hand_side, assume_a = 'pos').T
         
         if u_svd is not None:
-            end = time.time()
+            timer.lap()
             dist.append( compute_svd_error(W2, k, u_svd) )
-            times.append(end - start)
-            start = time.time()
+            timer.reset()
         i += 1
     
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
     s = np.sqrt(lamb / (1 - s**2))
-    end = time.time()
-    t = end - start
+    times = timer.times
+    t = timer.total()
     return (u, s, t, i, dist, times)
 
 
@@ -168,6 +171,11 @@ def display(method, t, i, u, s):
     print(u[:, 0:k])
 
 
+algorithms = [('LAE-PCA (untied)', LAE_PCA_untied, [W1,W2]),
+              ('LAE-PCA (sync)',   LAE_PCA_sync,   [W2]),
+              ('LAE-PCA (oja)',    LAE_PCA_oja,    [W2]),
+              ('LAE-PCA (exact)',  LAE_PCA_exact,  [W1,W2])]
+
 # perform timing runs
 (u_svd, s, t) = svd()
 display('SVD', t, None, u_svd, s)
@@ -175,39 +183,34 @@ display('SVD', t, None, u_svd, s)
 (u, s, t) = randomized_svd_wrapper()
 display('Randomized SVD', t, None, u, s)
 
-(u, s, t, i, _, _) = LAE_PCA_untied(W1, W2, None)
-display('LAE-PCA (untied)', t, i, u, s)
-
-(u, s, t, i, _, _) = LAE_PCA_sync(W2, None)
-display('LAE-PCA (sync)', t, i, u, s)
-
-(u, s, t, i, _, _) = LAE_PCA_oja(W2, None)
-display('LAE-PCA (oja)', t, i, u, s)
-
-(u, s, t, i, _, _) = LAE_PCA_exact(W1, W2, None)
-display('LAE-PCA (exact)', t, i, u, s)
+for algorithm in algorithms:
+    (u, s, t, i, _, _) = algorithm[1](*algorithm[2], None)
+    display(algorithm[0], t, i, u, s)
 
 # perform diagnostic runs
-(_ ,_ ,_ ,_ ,dist2,times2) = LAE_PCA_untied(W1, W2, u_svd)
-(_ ,_ ,_ ,_ ,dist3,times3) = LAE_PCA_sync(W2, u_svd)
-(_ ,_ ,_ ,_ ,dist4,times4) = LAE_PCA_oja(W2, u_svd)
-(_ ,_ ,_ ,_ ,dist5,times5) = LAE_PCA_exact(W1, W2, u_svd)
+distances = []
+runtimes = []
+for algorithm in algorithms:
+    (_ ,_ ,_ ,_ ,distance,runtime) = algorithm[1](*algorithm[2], u_svd)
+    distances.append(distance)
+    runtimes.append(runtime)
 
-plt.plot(dist2)
-plt.plot(dist3)
-plt.plot(dist4)
-plt.plot(dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+# plot results
+legend = []
+for idx, algorithm in enumerate(algorithms):
+    legend.append(algorithm[0])
+    plt.plot(distances[idx])
+
+plt.legend(legend)
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel('Error in SVD factor U')
 plt.show()
 
-plt.plot(np.cumsum(times2), dist2)
-plt.plot(np.cumsum(times3), dist3)
-plt.plot(np.cumsum(times4), dist4)
-plt.plot(np.cumsum(times5), dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+for idx, algorithm in enumerate(algorithms):
+    plt.plot(np.cumsum(runtimes[idx]), distances[idx])
+
+plt.legend(legend)
 plt.title('Rate of convergence')
 plt.xlabel('Time (sec)')
 plt.ylabel('Error in SVD factor U')
