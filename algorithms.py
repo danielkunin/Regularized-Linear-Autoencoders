@@ -32,13 +32,30 @@ class t_timer:
     def total(self):
         end = time.time()
         return np.sum(self.times) + end - self.start
-        
-def compute_svd_error(W2, k, u_svd):
-    dist = 0;
-    u, s, _ = np.linalg.svd(W2, full_matrices = False)
-    for col in range(k):
-        dist += np.min([np.linalg.norm(u_svd[:, col] - u[:, col]), np.linalg.norm(-u_svd[:, col] - u[:, col])])
-    return dist
+    
+class error_metric_svd:
+    def __init__(self, u_svd, k):
+        self.description = 'Error in SVD factor U'
+        self.u_svd = u_svd
+        self.k = k
+    def compute_error(self, W2, W1 = None):
+        dist = 0
+        u, s, _ = np.linalg.svd(W2, full_matrices = False)
+        for col in range(k):
+            dist += np.min([np.linalg.norm(self.u_svd[:, col] - u[:, col]), np.linalg.norm(-self.u_svd[:, col] - u[:, col])])
+        return dist
+
+class error_metric_objective:
+    def __init__(self, X, lamb):
+        self.X = X
+        self.lamb = lamb
+        self.description = 'Objective value (lambda = ' + str(lamb) + ')'
+    def compute_error(self, W2, W1 = None):
+        if W1 is None:
+            return np.linalg.norm(X - W2 @ W2.T @ X, 'fro')**2 + 2 * lamb * np.linalg.norm(W2)**2
+        else:
+            return np.linalg.norm(X - W2 @ W1   @ X, 'fro')**2 +     lamb * np.linalg.norm(W2)**2 + lamb * np.linalg.norm(W1)**2
+
 
 # SVD with dgesdd (divide and conquer)
 def svd():
@@ -55,7 +72,7 @@ def randomized_svd_wrapper():
     return (u, s, t)
 
 # LAE-PCA using untied weights and gradient descent
-def LAE_PCA_untied(W1, W2, u_svd = None):
+def LAE_PCA_untied(W1, W2, error_metric = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
@@ -66,9 +83,9 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
         W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
         W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
         
-        if u_svd is not None:
+        if error_metric is not None:
             timer.lap()
-            dist.append( compute_svd_error(W2, k, u_svd) )
+            dist.append( error_metric(W2, W1) )
             timer.reset()
         i += 1
         
@@ -79,7 +96,7 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using synchronized weights at initialization and gradient descent
-def LAE_PCA_sync(W2, u_svd = None):
+def LAE_PCA_sync(W2, error_metric = None):
     W1 = W2.copy().T
     W2 = W2.copy()
     dist = []
@@ -94,9 +111,9 @@ def LAE_PCA_sync(W2, u_svd = None):
         W2 -= W2_update
         diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
         
-        if u_svd is not None:
+        if error_metric is not None:
             timer.lap()
-            dist.append( compute_svd_error(W2, k, u_svd) )
+            dist.append( error_metric(W2, W1) )
             timer.reset()
         i += 1
         
@@ -107,7 +124,7 @@ def LAE_PCA_sync(W2, u_svd = None):
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using single weight matrix and gradient descent (Regularized Oja's Rule)
-def LAE_PCA_oja(W2, u_svd = None):
+def LAE_PCA_oja(W2, error_metric = None):
     W2 = W2.copy()
     dist = []
     timer = t_timer()
@@ -119,9 +136,9 @@ def LAE_PCA_oja(W2, u_svd = None):
         W2 -= update
         diff = np.linalg.norm(update)
         
-        if u_svd is not None:
+        if error_metric is not None:
             timer.lap()
-            dist.append( compute_svd_error(W2, k, u_svd) )
+            dist.append( error_metric(W2, W1) )
             timer.reset()
         i += 1
         
@@ -131,8 +148,9 @@ def LAE_PCA_oja(W2, u_svd = None):
     t = timer.total()
     return (u, s, t, i, dist, times)
 
+
 # LAE-PCA using untied weight matrices and alternating exact minimization
-def LAE_PCA_exact(W1, W2, synced = False, u_svd = None):
+def LAE_PCA_exact(W1, W2, synced = False, error_metric = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
@@ -156,9 +174,9 @@ def LAE_PCA_exact(W1, W2, synced = False, u_svd = None):
         if synced:
             W1 = W2.T
         
-        if u_svd is not None:
+        if error_metric is not None:
             timer.lap()
-            dist.append( compute_svd_error(W2, k, u_svd) )
+            dist.append( error_metric(W2, W1) )
             timer.reset()
         i += 1
     
@@ -198,13 +216,15 @@ for algorithm in algorithms:
     display(algorithm[0], t, i, u, s)
 
 # perform diagnostic runs
+error_metric = error_metric_svd(u_svd, k)
+#error_metric = error_metric_objective(X, lamb)
 distances = []
 runtimes = []
 for algorithm in algorithms:
-    (_ ,_ ,_ ,_ ,distance,runtime) = algorithm[1](*algorithm[2], u_svd)
+    (_ ,_ ,_ ,_ ,distance,runtime) = algorithm[1](*algorithm[2], error_metric.compute_error)
     distances.append(distance)
     runtimes.append(runtime)
-
+    
 # plot results
 legend = []
 for idx, algorithm in enumerate(algorithms):
@@ -214,7 +234,7 @@ for idx, algorithm in enumerate(algorithms):
 plt.legend(legend)
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
-plt.ylabel('Error in SVD factor U')
+plt.ylabel(error_metric.description)
 plt.show()
 
 for idx, algorithm in enumerate(algorithms):
@@ -223,5 +243,5 @@ for idx, algorithm in enumerate(algorithms):
 plt.legend(legend)
 plt.title('Rate of convergence')
 plt.xlabel('Time (sec)')
-plt.ylabel('Error in SVD factor U')
+plt.ylabel(error_metric.description)
 plt.show()
