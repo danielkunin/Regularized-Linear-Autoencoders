@@ -11,7 +11,8 @@ k = 2
 eps = 1e-8
 alpha = 1e-5
 lamb = 50
-I = np.eye(m)
+Im = np.eye(m)
+Ik = np.eye(k)
 
 np.random.seed(0)
 X = np.random.normal(size = (m, n))
@@ -36,9 +37,9 @@ def svd():
     return (u, s, t)
 
 # Randomized SVD
-def randomized_svd_wrapper():
+def rsvd(k):
     start = time.time()
-    u, s, _ = randomized_svd(X, 2)
+    u, s, _ = randomized_svd(X, k)
     end = time.time()
     t = end - start
     return (u, s, t)
@@ -53,8 +54,8 @@ def LAE_PCA_untied(W1, W2, u_svd = None):
     XXt = X @ X.T
     i = 0
     while np.linalg.norm(W1 - W2.T) > eps:
-        W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
-        W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+        W1 -= alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
+        W2 -= alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
         
         if u_svd is not None:
             end = time.time()
@@ -80,8 +81,8 @@ def LAE_PCA_sync(W2, u_svd = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        W1_update = alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
-        W2_update = alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+        W1_update = alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
+        W2_update = alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
         W1 -= W1_update
         W2 -= W2_update
         diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
@@ -109,7 +110,7 @@ def LAE_PCA_oja(W2, u_svd = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
+        update = alpha * (((W2 @ W2.T - Im) @ XXt) @ W2 + lamb * W2)
         W2 -= update
         diff = np.linalg.norm(update)
         
@@ -127,7 +128,7 @@ def LAE_PCA_oja(W2, u_svd = None):
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using untied weight matrices and alternating exact minimization
-def LAE_PCA_exact(W1, W2, u_svd = None):
+def LAE_PCA_exact_untied(W1, W2, u_svd = None):
     W1 = W1.copy()
     W2 = W2.copy()
     dist = []
@@ -136,14 +137,46 @@ def LAE_PCA_exact(W1, W2, u_svd = None):
     XXt = X @ X.T
     i = 0
     while np.linalg.norm(W1 - W2.T) > eps:
-        coefficient_matrix = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
-        np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
-        W1 = scipy.linalg.solve(coefficient_matrix, (W2.T @ XXt).reshape((m*k, 1)), assume_a = 'pos').reshape((k, m))
+        RHS = (W2.T @ XXt).reshape((m*k, 1))
+        LHS = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
+        np.fill_diagonal(LHS, LHS.diagonal() + lamb)
+        W1 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').reshape((k, m))
         
-        right_hand_side = W1 @ XXt
-        coefficient_matrix = right_hand_side @ W1.T
-        np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
-        W2 = scipy.linalg.solve(coefficient_matrix, right_hand_side, assume_a = 'pos').T
+        RHS = W1 @ XXt
+        LHS = RHS @ W1.T
+        np.fill_diagonal(LHS, LHS.diagonal() + lamb)
+        W2 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').T
+        
+        if u_svd is not None:
+            end = time.time()
+            dist.append( compute_svd_error(W2, k, u_svd) )
+            times.append(end - start)
+            start = time.time()
+        i += 1
+    
+    u, s, _ = np.linalg.svd(W2, full_matrices = False)
+    s = np.sqrt(lamb / (1 - s**2))
+    end = time.time()
+    t = end - start
+    return (u, s, t, i, dist, times)
+
+# LAE-PCA using tied weight matrices and alternating exact minimization
+def LAE_PCA_exact_tied(W1, W2, u_svd = None):
+    W1 = W1.copy()
+    W2 = W2.copy()
+    dist = []
+    times = []
+    start = time.time()
+    XXt = X @ X.T
+    i = 0
+    while np.linalg.norm(W1 - W2.T) > eps:
+        RHS = W2.T @ XXt
+        LHS = RHS @ W2 + lamb * Ik
+        W1 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos')
+
+        RHS = W1 @ XXt
+        LHS = RHS @ W1.T + lamb * Ik
+        W2 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').T
         
         if u_svd is not None:
             end = time.time()
@@ -172,7 +205,7 @@ def display(method, t, i, u, s):
 (u_svd, s, t) = svd()
 display('SVD', t, None, u_svd, s)
 
-(u, s, t) = randomized_svd_wrapper()
+(u, s, t) = rsvd(k)
 display('Randomized SVD', t, None, u, s)
 
 (u, s, t, i, _, _) = LAE_PCA_untied(W1, W2, None)
@@ -184,20 +217,25 @@ display('LAE-PCA (sync)', t, i, u, s)
 (u, s, t, i, _, _) = LAE_PCA_oja(W2, None)
 display('LAE-PCA (oja)', t, i, u, s)
 
-(u, s, t, i, _, _) = LAE_PCA_exact(W1, W2, None)
-display('LAE-PCA (exact)', t, i, u, s)
+(u, s, t, i, _, _) = LAE_PCA_exact_untied(W1, W2, None)
+display('LAE-PCA (exact untied)', t, i, u, s)
+
+(u, s, t, i, _, _) = LAE_PCA_exact_tied(W1, W2, None)
+display('LAE-PCA (exact tied)', t, i, u, s)
 
 # perform diagnostic runs
 (_ ,_ ,_ ,_ ,dist2,times2) = LAE_PCA_untied(W1, W2, u_svd)
 (_ ,_ ,_ ,_ ,dist3,times3) = LAE_PCA_sync(W2, u_svd)
 (_ ,_ ,_ ,_ ,dist4,times4) = LAE_PCA_oja(W2, u_svd)
-(_ ,_ ,_ ,_ ,dist5,times5) = LAE_PCA_exact(W1, W2, u_svd)
+(_ ,_ ,_ ,_ ,dist5,times5) = LAE_PCA_exact_untied(W1, W2, u_svd)
+(_ ,_ ,_ ,_ ,dist6,times6) = LAE_PCA_exact_tied(W1, W2, u_svd)
 
 plt.plot(dist2)
 plt.plot(dist3)
 plt.plot(dist4)
 plt.plot(dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+plt.plot(dist6)
+plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact untied)', 'LAE-PCA (exact tied)'])
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel('Error in SVD factor U')
@@ -207,7 +245,8 @@ plt.plot(np.cumsum(times2), dist2)
 plt.plot(np.cumsum(times3), dist3)
 plt.plot(np.cumsum(times4), dist4)
 plt.plot(np.cumsum(times5), dist5)
-plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact)'])
+plt.plot(np.cumsum(times6), dist6)
+plt.legend(['LAE-PCA (untied)', 'LAE-PCA (sync)', 'LAE-PCA (oja)', 'LAE-PCA (exact untied)', 'LAE-PCA (exact tied)'])
 plt.title('Rate of convergence')
 plt.xlabel('Time (sec)')
 plt.ylabel('Error in SVD factor U')
