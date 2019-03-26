@@ -11,7 +11,8 @@ k = 2
 eps = 1e-8
 alpha = 1e-5
 lamb = 50
-I = np.eye(m)
+Im = np.eye(m)
+Ik = np.eye(k)
 
 np.random.seed(0)
 X = np.random.normal(size = (m, n))
@@ -64,10 +65,9 @@ def svd():
     t = timer.total()
     return (u, s, t)
 
-# Randomized SVD
-def randomized_svd_wrapper():
+def rsvd(k):
     timer = t_timer()
-    u, s, _ = randomized_svd(X, 2)
+    u, s, _ = randomized_svd(X, k)
     t = timer.total()
     return (u, s, t)
 
@@ -80,8 +80,8 @@ def LAE_PCA_untied(W1, W2, error_metric = None):
     XXt = X @ X.T
     i = 0
     while np.linalg.norm(W1 - W2.T) > eps:
-        W1 -= alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
-        W2 -= alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+        W1 -= alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
+        W2 -= alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
         
         if error_metric is not None:
             timer.lap()
@@ -105,8 +105,8 @@ def LAE_PCA_sync(W2, error_metric = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        W1_update = alpha * ((W2.T @ (W2 @ W1 - I)) @ XXt + lamb * W1)
-        W2_update = alpha * (((W2 @ W1 - I) @ XXt) @ W1.T + lamb * W2)
+        W1_update = alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
+        W2_update = alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
         W1 -= W1_update
         W2 -= W2_update
         diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
@@ -132,7 +132,7 @@ def LAE_PCA_oja(W2, error_metric = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        update = alpha * (((W2 @ W2.T - I) @ XXt) @ W2 + lamb * W2)
+        update = alpha * (((W2 @ W2.T - Im) @ XXt) @ W2 + lamb * W2)
         W2 -= update
         diff = np.linalg.norm(update)
         
@@ -160,14 +160,15 @@ def LAE_PCA_exact(W1, W2, synced = False, error_metric = None):
     i = 0
     while diff > eps:
         if not synced:
-            coefficient_matrix = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
-            np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
-            W1 = scipy.linalg.solve(coefficient_matrix, (W2.T @ XXt).reshape((m*k, 1)), assume_a = 'pos').reshape((k, m))
+            LHS = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
+            np.fill_diagonal(LHS, LHS.diagonal() + lamb)
+            RHS = (W2.T @ XXt).reshape((m*k, 1))
+            W1 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').reshape((k, m))
         
-        right_hand_side = W1 @ XXt
-        coefficient_matrix = right_hand_side @ W1.T
-        np.fill_diagonal(coefficient_matrix, coefficient_matrix.diagonal() + lamb)
-        W2 = scipy.linalg.solve(coefficient_matrix, right_hand_side, assume_a = 'pos').T
+        RHS = W1 @ XXt
+        LHS = RHS @ W1.T
+        np.fill_diagonal(LHS, LHS.diagonal() + lamb)
+        W2 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').T
         
         diff = np.linalg.norm(W1 - W2.T)
         
@@ -178,6 +179,7 @@ def LAE_PCA_exact(W1, W2, synced = False, error_metric = None):
             timer.lap()
             dist.append( error_metric(W2, W1) )
             timer.reset()
+
         i += 1
     
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
@@ -186,14 +188,11 @@ def LAE_PCA_exact(W1, W2, synced = False, error_metric = None):
     t = timer.total()
     return (u, s, t, i, dist, times)
 
-
-
-
 def display(method, t, i, u, s):
     if i == None:
         print('{:s} ({:0.5f} secs)'.format(method, t))
     else:
-        print('{:s}  ({:0.5f} secs, {} iterations)'.format(method, t, i))
+        print('{:s} ({:0.5f} secs, {} iterations)'.format(method, t, i))
     print(s[0:k])
     print(u[:, 0:k])
 
@@ -208,7 +207,7 @@ algorithms = [('LAE-PCA (GD-untied)',          LAE_PCA_untied, [W1, W2]),
 (u_svd, s, t) = svd()
 display('SVD', t, None, u_svd, s)
 
-(u, s, t) = randomized_svd_wrapper()
+(u, s, t) = rsvd(k)
 display('Randomized SVD', t, None, u, s)
 
 for algorithm in algorithms:
@@ -232,6 +231,7 @@ for idx, algorithm in enumerate(algorithms):
     plt.plot(distances[idx])
 
 plt.legend(legend)
+
 plt.title('Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel(error_metric.description)
