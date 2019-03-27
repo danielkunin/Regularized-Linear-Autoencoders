@@ -24,9 +24,9 @@ W2 = np.random.normal(size = (m, k))
 
 
 class SyncMode(Enum):
-    NO_SYNC = 1
+    UNTIED = 1
     SYNC = 2
-    COPY = 3
+    TIED = 3
 
 class t_timer:
     def __init__(self):
@@ -88,7 +88,7 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        if syncMode == SyncMode.NO_SYNC:
+        if syncMode == SyncMode.UNTIED:
             W1 -= alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
             W2 -= alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
             diff = np.linalg.norm(W1 - W2.T)
@@ -97,12 +97,13 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
             W2_update = alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
             W1 -= W1_update
             W2 -= W2_update
+            
             diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
         else:
             update = alpha * (((W2 @ W2.T - Im) @ XXt) @ W2 + lamb * W2)
             W2 -= update
             W1 = W2.T
-            diff = np.linalg.norm(update)
+            diff = 2 * np.linalg.norm(update)
         
         if error_metric is not None:
             timer.lap()
@@ -126,7 +127,7 @@ def LAE_PCA_exact(W1, W2, syncMode, error_metric = None):
     diff = np.inf
     i = 0
     while diff > eps:
-        if syncMode == SyncMode.NO_SYNC:
+        if syncMode == SyncMode.UNTIED:
             LHS = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
             np.fill_diagonal(LHS, LHS.diagonal() + lamb)
             RHS = (W2.T @ XXt).reshape((m*k, 1))
@@ -146,7 +147,14 @@ def LAE_PCA_exact(W1, W2, syncMode, error_metric = None):
             LHS = RHS @ W1.T + lamb * Ik
             W2 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').T
             
-            diff = np.linalg.norm(W1 - W2.T)
+            W1 = (W1 + W2.T) / 2
+            W2 = W1.T
+            
+            if i == 0:
+                diff = eps + 1
+            else:
+                diff = np.linalg.norm(W1 - prev_W1)
+            prev_W1 = W1
         else:
             RHS = W1 @ XXt
             LHS = RHS @ W1.T + lamb * Ik
@@ -177,12 +185,12 @@ def display(method, t, i, u, s):
     print(u[:, 0:k])
 
 
-algorithms = [('LAE-PCA (GD-untied)',     LAE_PCA_GD,    [W1,   W2, SyncMode.NO_SYNC]),
-              ('LAE-PCA (GD-sync)',       LAE_PCA_GD,    [W2.T, W2, SyncMode.SYNC]),
-              ('LAE-PCA (GD-oja)',        LAE_PCA_GD,    [W1,   W2, SyncMode.COPY]),
-              ('LAE-PCA (exact-untied)',  LAE_PCA_exact, [W2.T, W2, SyncMode.NO_SYNC]),
-              ('LAE-PCA (exact-sync)',    LAE_PCA_exact, [W1,   W2, SyncMode.SYNC]),
-              ('LAE-PCA (exact-copy)',    LAE_PCA_exact, [W1,   W2, SyncMode.COPY]),]
+algorithms = [('GD-untied',     LAE_PCA_GD,    [W1,   W2, SyncMode.UNTIED]),
+              ('GD-sync',       LAE_PCA_GD,    [W2.T, W2, SyncMode.SYNC]),
+              ('GD-tied',       LAE_PCA_GD,    [W1,   W2, SyncMode.TIED]),
+              ('exact-untied',  LAE_PCA_exact, [W1,   W2, SyncMode.UNTIED]),
+              ('exact-sync',    LAE_PCA_exact, [W2.T, W2, SyncMode.SYNC]),
+              ('exact-tied',    LAE_PCA_exact, [W1,   W2, SyncMode.TIED]),]
 
 # perform timing runs
 (u_svd, s, t) = svd()
@@ -213,7 +221,7 @@ for idx, algorithm in enumerate(algorithms):
 
 plt.legend(legend)
 
-plt.title('Rate of convergence')
+plt.title('LAE-PCA - Rate of convergence')
 plt.xlabel('Iteration')
 plt.ylabel(error_metric.description)
 plt.show()
