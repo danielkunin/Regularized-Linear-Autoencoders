@@ -98,6 +98,9 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
             W1 -= W1_update
             W2 -= W2_update
             
+            W1 = (W1 + W2.T) / 2
+            W2 = W1.T.copy()
+            
             diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
         else:
             update = alpha * (((W2 @ W2.T - Im) @ XXt) @ W2 + lamb * W2)
