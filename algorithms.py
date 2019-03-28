@@ -78,6 +78,16 @@ def rsvd(k):
     t = timer.total()
     return (u, s, t)
 
+# function values and derivatives
+def f_W1(XXt, W1, W2):
+    return np.linalg.norm(X - W2 @ W1 @ X, 'fro')**2 + lamb * np.linalg.norm(W1)**2
+def f_W2(XXt, W1, W2):
+    return np.linalg.norm(X - W2 @ W1 @ X, 'fro')**2 + lamb * np.linalg.norm(W2)**2
+def Df_W1(XXt, W1, W2):
+    return (W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1
+def Df_W2(XXt, W1, W2):
+    return ((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2
+
 # LAE-PCA using gradient descent
 def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
     W1 = W1.copy()
@@ -89,12 +99,12 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
     i = 0
     while diff > eps:
         if syncMode == SyncMode.UNTIED:
-            W1 -= alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
-            W2 -= alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
+            W1 -= alpha * Df_W1(XXt, W1, W2)
+            W2 -= alpha * Df_W2(XXt, W1, W2)
             diff = np.linalg.norm(W1 - W2.T)
         elif syncMode == SyncMode.SYNC:
-            W1_update = alpha * ((W2.T @ (W2 @ W1 - Im)) @ XXt + lamb * W1)
-            W2_update = alpha * (((W2 @ W1 - Im) @ XXt) @ W1.T + lamb * W2)
+            W1_update = alpha * Df_W1(XXt, W1, W2)
+            W2_update = alpha * Df_W2(XXt, W1, W2)
             W1 -= W1_update
             W2 -= W2_update
             
@@ -103,7 +113,7 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
             
             diff = np.linalg.norm(W1_update) + np.linalg.norm(W2_update)
         else:
-            update = alpha * (((W2 @ W2.T - Im) @ XXt) @ W2 + lamb * W2)
+            update = alpha * Df_W2(XXt, W2.T, W2)
             W2 -= update
             W1 = W2.T
             diff = 2 * np.linalg.norm(update)
@@ -114,6 +124,42 @@ def LAE_PCA_GD(W1, W2, syncMode, error_metric = None):
             timer.reset()
         i += 1
         
+    u, s, _ = np.linalg.svd(W2, full_matrices = False)
+    s = np.sqrt(lamb / (1 - s**2))
+    times = timer.times
+    t = timer.total()
+    return (u, s, t, i, dist, times)
+
+# LAE-PCA using an optimization algorithm from Scipy
+def LAE_PCA_SCIPY(method, W1, W2, syncMode, error_metric = None):
+    W1 = W1.copy()
+    W2 = W2.copy()
+    dist = []
+    timer = t_timer()
+    XXt = X @ X.T
+    diff = np.inf
+    i = 0
+    while diff > 100*eps:
+        if syncMode == SyncMode.UNTIED:
+            f  = lambda W1 :  f_W1(XXt, W1.reshape((k, m)), W2)
+            df = lambda W1 : Df_W1(XXt, W1.reshape((k, m)), W2).reshape((k * m))
+            W1 = method(f, W1.reshape((k * m)), df,).reshape((k, m))
+            
+            f  = lambda W2 :  f_W2(XXt, W1, W2.reshape((m, k)))
+            df = lambda W2 : df_W2(XXt, W1, W2.reshape((m, k))).reshape((m * k))
+            W2 = method(f, W2.reshape((m * k)), df,).reshape((m, k))
+            
+            diff = np.linalg.norm(W1 - W2.T)
+        else:
+            raise Exception('Unsupported SyncMode for LAE_PCA_SCIPY.')
+        
+        if error_metric is not None:
+            timer.lap()
+            dist.append( error_metric(W2, W1) )
+            timer.reset()
+
+        i += 1
+    
     u, s, _ = np.linalg.svd(W2, full_matrices = False)
     s = np.sqrt(lamb / (1 - s**2))
     times = timer.times
@@ -133,7 +179,7 @@ def LAE_PCA_exact(W1, W2, syncMode, error_metric = None):
         if syncMode == SyncMode.UNTIED:
             LHS = np.kron(W2.T @ W2, XXt) # order reversed since matrices are stored per row
             np.fill_diagonal(LHS, LHS.diagonal() + lamb)
-            RHS = (W2.T @ XXt).reshape((m*k, 1))
+            RHS = (W2.T @ XXt).reshape((m * k, 1))
             W1 = scipy.linalg.solve(LHS, RHS, assume_a = 'pos').reshape((k, m))
         
             RHS = W1 @ XXt
@@ -191,6 +237,7 @@ def display(method, t, i, u, s):
 algorithms = [('GD-untied',     LAE_PCA_GD,    [W1,   W2, SyncMode.UNTIED]),
               ('GD-sync',       LAE_PCA_GD,    [W2.T, W2, SyncMode.SYNC]),
               ('GD-tied',       LAE_PCA_GD,    [W1,   W2, SyncMode.TIED]),
+              #('L-BFGS untied', LAE_PCA_SCIPY, [scipy.optimize.fmin_bfgs, W1, W2, SyncMode.UNTIED]),
               ('exact-untied',  LAE_PCA_exact, [W1,   W2, SyncMode.UNTIED]),
               ('exact-sync',    LAE_PCA_exact, [W2.T, W2, SyncMode.SYNC]),
               ('exact-tied',    LAE_PCA_exact, [W1,   W2, SyncMode.TIED]),]
