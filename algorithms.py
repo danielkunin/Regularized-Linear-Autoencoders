@@ -139,15 +139,20 @@ def LAE_PCA_SCIPY(method, W1, W2, syncMode, error_metric = None):
     XXt = X @ X.T
     diff = np.inf
     i = 0
+    gradient_evalutions = 0
     while diff > 100*eps:
         if syncMode == SyncMode.UNTIED:
             f  = lambda W1 :  f_W1(XXt, W1.reshape((k, m)), W2)
-            df = lambda W1 : Df_W1(XXt, W1.reshape((k, m)), W2).reshape((k * m))
-            W1 = method(f, W1.reshape((k * m)), df,).reshape((k, m))
+            Df = lambda W1 : Df_W1(XXt, W1.reshape((k, m)), W2).reshape((k * m))
+            result = scipy.optimize.minimize(f, W1.reshape((k * m)), method = method, jac = Df)
+            W1 = result.x.reshape((k, m))
+            gradient_evalutions += result.nit
             
             f  = lambda W2 :  f_W2(XXt, W1, W2.reshape((m, k)))
-            df = lambda W2 : df_W2(XXt, W1, W2.reshape((m, k))).reshape((m * k))
-            W2 = method(f, W2.reshape((m * k)), df,).reshape((m, k))
+            Df = lambda W2 : Df_W2(XXt, W1, W2.reshape((m, k))).reshape((m * k))
+            result = scipy.optimize.minimize(f, W2.reshape((m * k)), method = method, jac = Df)
+            W2 = result.x.reshape((m, k))
+            gradient_evalutions += result.nit
             
             diff = np.linalg.norm(W1 - W2.T)
         else:
@@ -164,6 +169,7 @@ def LAE_PCA_SCIPY(method, W1, W2, syncMode, error_metric = None):
     s = np.sqrt(lamb / (1 - s**2))
     times = timer.times
     t = timer.total()
+    #print('Number of gradient evalutions:', gradient_evalutions)
     return (u, s, t, i, dist, times)
 
 # LAE-PCA using exact minimization
@@ -237,7 +243,7 @@ def display(method, t, i, u, s):
 algorithms = [('GD-untied',     LAE_PCA_GD,    [W1,   W2, SyncMode.UNTIED]),
               ('GD-sync',       LAE_PCA_GD,    [W2.T, W2, SyncMode.SYNC]),
               ('GD-tied',       LAE_PCA_GD,    [W1,   W2, SyncMode.TIED]),
-              #('L-BFGS untied', LAE_PCA_SCIPY, [scipy.optimize.fmin_bfgs, W1, W2, SyncMode.UNTIED]),
+              #('L-BFGS untied', LAE_PCA_SCIPY, ['L-BFGS-B', W1, W2, SyncMode.UNTIED]),
               ('exact-untied',  LAE_PCA_exact, [W1,   W2, SyncMode.UNTIED]),
               ('exact-sync',    LAE_PCA_exact, [W2.T, W2, SyncMode.SYNC]),
               ('exact-tied',    LAE_PCA_exact, [W1,   W2, SyncMode.TIED]),]
