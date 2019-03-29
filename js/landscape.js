@@ -120,9 +120,9 @@ THREE.ParametricGeometries = {
 			var w1 = u * width;
 			var w2 = v * height;
 			if (x.length == 1) {
-				var z = (x[0] - w2 * w1 * x[0])**2;
+				var z = (1 - w2 * w1)**2 * x[0];
 			} else {
-				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2;
+				var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1];
 			}
 
 			target.set( w1, w2, z );
@@ -138,9 +138,9 @@ THREE.ParametricGeometries = {
 			var w1 = u * width;
 			var w2 = v * height;
 			if (x.length == 1) {
-				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
+				var z = (1 - w2 * w1)**2 * x[0] + lamb * Math.abs(w2 * w1)**pow;
 			} else {
-				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
+				var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
 			}
 
 			target.set( w1, w2, z );
@@ -157,9 +157,9 @@ THREE.ParametricGeometries = {
 			var w2 = v * height;
 
 			if (x.length == 1) {
-				var z = (x[0] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+				var z = (1 - w2 * w1)**2 * x[0] + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			} else {
-				var z = (x[0] - w1**2 * x[0])**2 + (x[1] - w2**2 * x[1])**2 + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+				var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			}
 
 			target.set( w1, w2, z );
@@ -172,16 +172,16 @@ THREE.ParametricGeometries = {
 
 var scalar = function() {
   this.loss = 'Unregularized',
-  this.x = 0.5,
-  this.lamb = 0.5,
+  this.x = 0.25,
+  this.lamb = 0.25,
   this.pow = 2
 };
 
 var vector = function() {
   this.loss = 'Unregularized',
-  this.x1 = 0.5,
-  this.x2 = 0.5,
-  this.lamb = 0.5,
+  this.x1 = 0.25,
+  this.x2 = 0.25,
+  this.lamb = 0.25,
   this.pow = 2
 };	
 
@@ -198,7 +198,7 @@ window.onload = function() {
 		f2.close();
 	}
 	f1.add(obj1, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph1).name('Loss Function');
-	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x'));
+	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x^2'));
 	f1.add(obj1, 'lamb', 0, 2).onChange(graph1).name(katex.renderToString('\\lambda'));
 	f1.add(obj1, 'pow', 0.5, 4).onChange(graph1).name(katex.renderToString('\\alpha'));
 
@@ -209,8 +209,8 @@ window.onload = function() {
 		f1.close();
 	}
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
-	f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1'));
-	f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2'));
+	f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1^2'));
+	f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2^2'));
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
