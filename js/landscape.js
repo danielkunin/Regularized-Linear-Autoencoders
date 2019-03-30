@@ -123,7 +123,7 @@ THREE.ParametricGeometries = {
 				var z = (1 - w2 * w1)**2 * x[0];
 			} else {
 				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1];
-				var z = (x[1]**0.5 - w2 * w1 * x[0]**0.5)**2;
+				var z = (x[1] - w2 * w1 * x[0])**2;
 			}
 
 			target.set( w1, w2, z );
@@ -142,7 +142,7 @@ THREE.ParametricGeometries = {
 				var z = (1 - w2 * w1)**2 * x[0] + lamb * Math.abs(w2 * w1)**pow;
 			} else {
 				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
-				var z = (x[1]**0.5 - w2 * w1 * x[0]**0.5)**2 + lamb * Math.abs(w2 * w1)**pow;
+				var z = (x[1] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
 			}
 
 			target.set( w1, w2, z );
@@ -162,7 +162,7 @@ THREE.ParametricGeometries = {
 				var z = (1 - w2 * w1)**2 * x[0] + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			} else {
 				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
-				var z = (x[1]**0.5 - w2 * w1 * x[0]**0.5)**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+				var z = (x[1] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			}
 
 			target.set( w1, w2, z );
@@ -215,8 +215,8 @@ window.onload = function() {
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
 	// f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1^2'));
 	// f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2^2'));
-	f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x^2'));
-	f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('y^2'));
+	f2.add(obj2, 'x1', -2, 2).onChange(graph2).name(katex.renderToString('x'));
+	f2.add(obj2, 'x2', -2, 2).onChange(graph2).name(katex.renderToString('y'));
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
