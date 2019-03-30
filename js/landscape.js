@@ -90,7 +90,7 @@ function removeLandscape() {
 
 }
 
-function addLandscape(loss, x, lamb, pow) {
+function addLandscape(loss, x, param) {
 
 	material = new THREE.MeshPhongMaterial( {
 					color: 0x156289,
@@ -100,7 +100,7 @@ function addLandscape(loss, x, lamb, pow) {
 					transparent: true,
 					opacity: 0.8
 				} );
-	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](x, lamb, pow, 4,4), 75, 75 );
+	geometry = new THREE.ParametricBufferGeometry( THREE.ParametricGeometries[loss](x, param, 4,4), 75, 75 );
 	object = new THREE.Mesh( geometry, material );
 	object.position.set( 0, 0, 0 );
 	object.scale.multiplyScalar( 5 );
@@ -111,7 +111,7 @@ function addLandscape(loss, x, lamb, pow) {
 
 THREE.ParametricGeometries = {
 
-	Unregularized: function ( x, lamb, pow, width, height ) {
+	Unregularized: function ( data, param, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -119,18 +119,22 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
-			if (x.length == 1) {
-				var z = (1 - w2 * w1)**2 * x[0];
-			} else {
-				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1];
-				var z = (x[1] - w2 * w1 * x[0])**2;
-			}
+			var x = data[0]
+			var y = data[1]
+			var z = (y - w2 * w1 * x)**2;
+
+			// if (x.length == 1) {
+			// 	var z = (1 - w2 * w1)**2 * x2;
+			// } else {
+			// 	// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1];
+			// 	var z = (y - w2 * w1 * x)**2;
+			// }
 
 			target.set( w1, w2, z );
 		};
 	},
 
-	Product: function ( x, lamb, pow, width, height ) {
+	Product: function ( data, param, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -138,18 +142,23 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
-			if (x.length == 1) {
-				var z = (1 - w2 * w1)**2 * x[0] + lamb * Math.abs(w2 * w1)**pow;
-			} else {
-				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
-				var z = (x[1] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
-			}
+			var x = data[0]
+			var y = data[1]
+			var lamb = param[0]
+			var pow = param[1]
+			var z = (y - w2 * w1 * x)**2 + lamb * Math.abs(w2 * w1)**pow;
+			// if (x.length == 1) {
+			// 	var z = (1 - w2 * w1)**2 * x[0] + lamb * Math.abs(w2 * w1)**pow;
+			// } else {
+			// 	// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
+			// 	var z = (x[1] - w2 * w1 * x[0])**2 + lamb * Math.abs(w2 * w1)**pow;
+			// }
 
 			target.set( w1, w2, z );
 		};
 	},
 
-	Sum: function ( x, lamb, pow, width, height ) {
+	Sum: function ( data, param, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -157,20 +166,25 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
+			var x = data[0]
+			var y = data[1]
+			var lamb = param[0]
+			var pow = param[1]
+			var z = (y - w2 * w1 * x)**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 
-			if (x.length == 1) {
-				var z = (1 - w2 * w1)**2 * x[0] + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
-			} else {
-				// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
-				var z = (x[1] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
-				// var z = (x[1] - w1 * x[0])**2 + lamb * (x[0] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
-			}
+			// if (x.length == 1) {
+			// 	var z = (1 - w2 * w1)**2 * x[0] + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+			// } else {
+			// 	// var z = (1 - w1**2)**2 * x[0] + (1 - w2**2)**2 * x[1] + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+			// 	var z = (x[1] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+			// 	// var z = (x[1] - w1 * x[0])**2 + lamb * (x[0] - w2 * w1 * x[0])**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+			// }
 
 			target.set( w1, w2, z );
 		};
 	},
 
-	Bio: function ( x, lamb1, lamb2, width, height ) {
+	Bio: function ( data, param, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -178,8 +192,12 @@ THREE.ParametricGeometries = {
 
 			var w1 = u * width;
 			var w2 = v * height;
-			var z = (x[1] - w1 * x[0])**2 + lamb1 * (x[0] - w2 * w1 * x[0])**2 + lamb2 * (w1**2 + w2**2);
-
+			var x = data[0]
+			var y = data[1]
+			var lamb0 = param[0]
+			var lamb1 = param[1]
+			var lamb2 = param[2]
+			var z = lamb0 * (y - w1 * x)**2 + lamb1 * (x - w2 * w1 * x)**2 + lamb2 * (w1**2 + w2**2);
 			target.set( w1, w2, z );
 		};
 	}
@@ -197,8 +215,8 @@ var scalar = function() {
 
 var vector = function() {
   this.loss = 'Unregularized',
-  this.x1 = 0.25,
-  this.x2 = 0.25,
+  this.x = 0.25,
+  this.y = 0.25,
   this.lamb = 0.25,
   this.pow = 2
 };	
@@ -207,6 +225,7 @@ var bio = function() {
   this.loss = 'Bio',
   this.x = 0.25,
   this.y = 0.25,
+  this.lamb0 = 0.25,
   this.lamb1 = 0.25,
   this.lamb2 = 0.25
 };
@@ -214,16 +233,17 @@ var bio = function() {
 
 window.onload = function() {
 	var gui = new dat.GUI();
-	var f1 = gui.addFolder('Autoencoder Scalar Case (m=1, k=1)');
+	var f1 = gui.addFolder('Autoencoder (m=1, k=1)');
 	// var f2 = gui.addFolder('Autoencoder Vector Case (m=2, k=1)');
-	var f2 = gui.addFolder('Prediction Scalar Case (m=1, k=1)');
-	var f3 = gui.addFolder('Bio Backprop (m=1, k=1)');
+	var f2 = gui.addFolder('Prediction (m=1, k=1)');
+	var f3 = gui.addFolder('Information Alignment (m=1, k=1)');
 	
 	var obj1 = new scalar();
 	var graph1 = function() {
 		removeLandscape();
-		addLandscape(obj1.loss, [obj1.x], obj1.lamb, obj1.pow);
+		addLandscape(obj1.loss, [Math.sqrt(obj1.x), Math.sqrt(obj1.x)], [obj1.lamb, obj1.pow]);
 		f2.close();
+		f3.close();
 	}
 	f1.add(obj1, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph1).name('Loss Function');
 	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x^2'));
@@ -233,27 +253,30 @@ window.onload = function() {
 	var obj2 = new vector();
 	var graph2 = function() {
 		removeLandscape();
-		addLandscape(obj2.loss, [obj2.x1, obj2.x2], obj2.lamb, obj2.pow);
+		addLandscape(obj2.loss, [obj2.x, obj2.y], [obj2.lamb, obj2.pow]);
 		f1.close();
+		f3.close();
 	}
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
 	// f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1^2'));
 	// f2.add(obj2, 'x2', 0, 2).onChange(graph2).name(katex.renderToString('x_2^2'));
-	f2.add(obj2, 'x1', -2, 2).onChange(graph2).name(katex.renderToString('x'));
-	f2.add(obj2, 'x2', -2, 2).onChange(graph2).name(katex.renderToString('y'));
+	f2.add(obj2, 'x', -2, 2).onChange(graph2).name(katex.renderToString('x'));
+	f2.add(obj2, 'y', -2, 2).onChange(graph2).name(katex.renderToString('y'));
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
 	var obj3 = new bio();
 	var graph3 = function() {
 		removeLandscape();
-		addLandscape(obj3.loss, [obj3.x, obj3.y], obj3.lamb1, obj3.lamb2);
+		addLandscape(obj3.loss, [obj3.x, obj3.y], [obj3.lamb0, obj3.lamb1, obj3.lamb2]);
 		f1.close();
+		f2.close();
 	}
 	f3.add(obj3, 'x', -2, 2).onChange(graph3).name(katex.renderToString('x'));
 	f3.add(obj3, 'y', -2, 2).onChange(graph3).name(katex.renderToString('y'));
-	f3.add(obj3, 'lamb1', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_1'));
-	f3.add(obj3, 'lamb2', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_2'));
+	f3.add(obj3, 'lamb0', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{pred}}'));
+	f3.add(obj3, 'lamb1', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{info}}'));
+	f3.add(obj3, 'lamb2', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{reg}}'));
 
 	graph1();
 	f1.open();
