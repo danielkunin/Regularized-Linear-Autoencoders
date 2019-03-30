@@ -34,8 +34,8 @@ function init() {
 
 	var w1 = makeTextSprite( "w1", { fontsize: 20 } );
 	var w2 = makeTextSprite( "w2", { fontsize: 20 } );
-	w1.position.set(-12,0,0);
-	w2.position.set(0,-12,0);
+	w1.position.set(0,-12,0);
+	w2.position.set(-12,0,0);
 	group.add( w1 );
 	group.add( w2 );
 
