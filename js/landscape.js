@@ -184,7 +184,7 @@ THREE.ParametricGeometries = {
 		};
 	},
 
-	Bio: function ( data, param, width, height ) {
+	IA: function ( data, param, width, height ) {
 		return function ( u, v, target ) {
 
 			u -= 0.5;
@@ -198,6 +198,24 @@ THREE.ParametricGeometries = {
 			var lamb1 = param[1]
 			var lamb2 = param[2]
 			var z = lamb0 * (y - w1 * x)**2 + lamb1 * (x - w2 * w1 * x)**2 + lamb2 * (w1**2 + w2**2);
+			target.set( w1, w2, z );
+		};
+	},
+
+	SA: function ( data, param, width, height ) {
+		return function ( u, v, target ) {
+
+			u -= 0.5;
+			v -= 0.5;
+
+			var w1 = u * width;
+			var w2 = v * height;
+			var x = data[0]
+			var y = data[1]
+			var lamb0 = param[0]
+			var lamb1 = param[1]
+			var lamb2 = param[2]
+			var z = lamb0 * (y - w1 * x)**2 - 2 * lamb1 * (w2 * w1) + lamb2 * (w1**2 + w2**2);
 			target.set( w1, w2, z );
 		};
 	}
@@ -221,8 +239,17 @@ var vector = function() {
   this.pow = 2
 };	
 
-var bio = function() {
-  this.loss = 'Bio',
+var ia = function() {
+  this.loss = 'IA',
+  this.x = 0.25,
+  this.y = 0.25,
+  this.lamb0 = 0.25,
+  this.lamb1 = 0.25,
+  this.lamb2 = 0.25
+};
+
+var sa = function() {
+  this.loss = 'SA',
   this.x = 0.25,
   this.y = 0.25,
   this.lamb0 = 0.25,
@@ -237,6 +264,7 @@ window.onload = function() {
 	// var f2 = gui.addFolder('Autoencoder Vector Case (m=2, k=1)');
 	var f2 = gui.addFolder('Prediction (m=1, k=1)');
 	var f3 = gui.addFolder('Information Alignment (m=1, k=1)');
+	var f4 = gui.addFolder('Symmetric Alignment (m=1, k=1)');
 	
 	var obj1 = new scalar();
 	var graph1 = function() {
@@ -265,7 +293,7 @@ window.onload = function() {
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
-	var obj3 = new bio();
+	var obj3 = new ia();
 	var graph3 = function() {
 		removeLandscape();
 		addLandscape(obj3.loss, [obj3.x, obj3.y], [obj3.lamb0, obj3.lamb1, obj3.lamb2]);
@@ -277,6 +305,19 @@ window.onload = function() {
 	f3.add(obj3, 'lamb0', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{pred}}'));
 	f3.add(obj3, 'lamb1', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{info}}'));
 	f3.add(obj3, 'lamb2', 0, 2).onChange(graph3).name(katex.renderToString('\\lambda_{\\text{reg}}'));
+
+	var obj4 = new sa();
+	var graph4 = function() {
+		removeLandscape();
+		addLandscape(obj4.loss, [obj4.x, obj4.y], [obj4.lamb0, obj4.lamb1, obj4.lamb2]);
+		f1.close();
+		f2.close();
+	}
+	f4.add(obj4, 'x', -2, 2).onChange(graph4).name(katex.renderToString('x'));
+	f4.add(obj4, 'y', -2, 2).onChange(graph4).name(katex.renderToString('y'));
+	f4.add(obj4, 'lamb0', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{pred}}'));
+	f4.add(obj4, 'lamb1', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{info}}'));
+	f4.add(obj4, 'lamb2', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{reg}}'));
 
 	graph1();
 	f1.open();
