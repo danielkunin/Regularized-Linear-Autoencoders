@@ -320,7 +320,7 @@ window.onload = function() {
 	f4.add(obj4, 'x', -2, 2).onChange(graph4).name(katex.renderToString('x'));
 	f4.add(obj4, 'y', -2, 2).onChange(graph4).name(katex.renderToString('y'));
 	f4.add(obj4, 'lamb0', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{pred}}'));
-	f4.add(obj4, 'lamb1', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{info}}'));
+	f4.add(obj4, 'lamb1', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{self}}'));
 	f4.add(obj4, 'lamb2', 0, 2).onChange(graph4).name(katex.renderToString('\\lambda_{\\text{reg}}'));
 
 	graph1();
