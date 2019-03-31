@@ -272,6 +272,7 @@ window.onload = function() {
 		addLandscape(obj1.loss, [Math.sqrt(obj1.x), Math.sqrt(obj1.x)], [obj1.lamb, obj1.pow]);
 		f2.close();
 		f3.close();
+		f4.close();
 	}
 	f1.add(obj1, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph1).name('Loss Function');
 	f1.add(obj1, 'x', 0, 2).onChange(graph1).name(katex.renderToString('x^2'));
@@ -284,6 +285,7 @@ window.onload = function() {
 		addLandscape(obj2.loss, [obj2.x, obj2.y], [obj2.lamb, obj2.pow]);
 		f1.close();
 		f3.close();
+		f4.close();
 	}
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
 	// f2.add(obj2, 'x1', 0, 2).onChange(graph2).name(katex.renderToString('x_1^2'));
@@ -299,6 +301,7 @@ window.onload = function() {
 		addLandscape(obj3.loss, [obj3.x, obj3.y], [obj3.lamb0, obj3.lamb1, obj3.lamb2]);
 		f1.close();
 		f2.close();
+		f4.close();
 	}
 	f3.add(obj3, 'x', -2, 2).onChange(graph3).name(katex.renderToString('x'));
 	f3.add(obj3, 'y', -2, 2).onChange(graph3).name(katex.renderToString('y'));
@@ -312,6 +315,7 @@ window.onload = function() {
 		addLandscape(obj4.loss, [obj4.x, obj4.y], [obj4.lamb0, obj4.lamb1, obj4.lamb2]);
 		f1.close();
 		f2.close();
+		f3.close();
 	}
 	f4.add(obj4, 'x', -2, 2).onChange(graph4).name(katex.renderToString('x'));
 	f4.add(obj4, 'y', -2, 2).onChange(graph4).name(katex.renderToString('y'));
