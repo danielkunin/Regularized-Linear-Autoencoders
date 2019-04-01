@@ -1,4 +1,7 @@
-In the Boston area tomorrow? Come hear our latest computational neuroscience results at the MIT Center for Brains, Minds, and Machines:
+*In the Boston area tomorrow?*
+
+Come hear our latest computational neuroscience results at the MIT Center for Brains, Minds, and Machines:
+
 https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation
 
 # Loss Landscapes of Regularized Linear Autoencoders
