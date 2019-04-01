@@ -1,3 +1,6 @@
+In the Boston area tomorrow? Come hear our latest computational neuroscience results at the MIT Center for Brains, Minds, and Machines:
+https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation
+
 # Loss Landscapes of Regularized Linear Autoencoders
 ##### [Daniel Kunin](http://daniel-kunin.com/), [Jonathan M. Bloom](https://www.broadinstitute.org/bios/jonathan-bloom), [Aleksandrina Goeva](https://tudaga.github.io/), [Cotton Seed](https://www.broadinstitute.org/bios/cotton-seed)
 
