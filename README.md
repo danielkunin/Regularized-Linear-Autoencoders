@@ -21,7 +21,7 @@ We're also grateful to [Google Brain](https://ai.google/research/teams/brain) fo
 <p align="center">
     <a href="https://www.youtube.com/watch?v=3aqB_n087cE&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/3aqB_n087cE/0.jpg" alt="Google Brain" width="400"/></a>
 
-We discussed our latest computational neuroscience results at the MIT [Center for Brains, Minds, and Machines](https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation) on April 2, 2019. Video forthcoming, slides [here](https://drive.google.com/file/d/1seI05mrQmosuOHoO2Jgn-cK1ZyCrDlnP/view?usp=sharing).
+We discussed our latest computational neuroscience results at the [Center for Brains, Minds, and Machines](https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation) at MIT on April 2, 2019. Video forthcoming, slides [here](https://drive.google.com/file/d/1seI05mrQmosuOHoO2Jgn-cK1ZyCrDlnP/view?usp=sharing).
 
 ### LAE-PCA Algorithms
 
