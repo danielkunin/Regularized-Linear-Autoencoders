@@ -16,7 +16,7 @@ We're excited to share a primer and seminar given by all four authors at the [Mo
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
 </p>
 
-We're grateful to [Google Brain](https://ai.google/research/teams/brain) for filming our talk on March 6, 2019 to share online. Video below left, slides [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
+We went deeper into Morse theory and ensemble learning at [Google Brain](https://ai.google/research/teams/brain) on March 6, 2019. Video below left, slides [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
 
 We discussed our latest computational neuroscience results at the [Center for Brains, Minds, and Machines](https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation) at MIT on April 2, 2019. Video below right, slides [here](https://drive.google.com/file/d/1seI05mrQmosuOHoO2Jgn-cK1ZyCrDlnP/view?usp=sharing).
 
