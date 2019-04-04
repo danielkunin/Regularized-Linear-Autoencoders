@@ -16,14 +16,14 @@ We're excited to share a primer and seminar given by all four authors at the [Mo
     <a href="https://www.youtube.com/watch?v=1mvwCmqd6zQ&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS&t=3480s"><img src="/img/seminar.png" alt="MIA Seminar" width="400"/></a>
 </p>
 
-We're also grateful to [Google Brain](https://ai.google/research/teams/brain) for filming our talk on March 6, 2019 to share online. Video below, slides [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
+We're grateful to [Google Brain](https://ai.google/research/teams/brain) for filming our talk on March 6, 2019 to share online. Video below left, slides [here](https://drive.google.com/file/d/1wNghE5-0JnHOYANBQMUsPWS1n3tmRJKA/view?usp=sharing).
+
+We discussed our latest computational neuroscience results at the [Center for Brains, Minds, and Machines](https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation) at MIT on April 2, 2019. Video below right, slides [here](https://drive.google.com/file/d/1seI05mrQmosuOHoO2Jgn-cK1ZyCrDlnP/view?usp=sharing).
 
 <p align="center">
     <a href="https://www.youtube.com/watch?v=3aqB_n087cE&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/3aqB_n087cE/0.jpg" alt="Google Brain" width="400"/></a>
     <a href="https://youtu.be/bVlzJZIH4vs"><img src="https://img.youtube.com/vi/bVlzJZIH4vs/0.jpg" alt="Center for Brains Minds + Machines" width="400"/></a>
 </p>
-
-We discussed our latest computational neuroscience results at the [Center for Brains, Minds, and Machines](https://cbmm.mit.edu/news-events/events/brains-minds-machines-seminar-series-topology-representation-teleportation) at MIT on April 2, 2019. Video above, slides [here](https://drive.google.com/file/d/1seI05mrQmosuOHoO2Jgn-cK1ZyCrDlnP/view?usp=sharing).
 
 ### LAE-PCA Algorithms
 
