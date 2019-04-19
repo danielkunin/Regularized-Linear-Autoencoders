@@ -74,7 +74,7 @@ We've created an [interactive visualization](https://danielkunin.github.io/Regul
 
 ### Computational Neuroscience
 
-See Jon's [talk](https://www.youtube.com/watch?v=bVlzJZIH4vs&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS) and [interview] at the Center for Brains, Minds and Machines for our progress on the computational neuroscience front as of April 2, 2019. Here's the history of how this theoretical project got us thinking about learning in the brain:
+See Jon's [talk](https://www.youtube.com/watch?v=bVlzJZIH4vs&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS) and [interview](https://www.youtube.com/watch?v=b0qnMVKRJVM) at the Center for Brains, Minds and Machines for our progress on the computational neuroscience front as of April 2, 2019. Here's the history of how this theoretical project got us thinking about learning in the brain:
 
 In response to v1 of the preprint, [Yoshua Bengio](http://www.iro.umontreal.ca/~bengioy/yoshua_en/) wrote us on February 10, 2019 that "the question of obtaining the transpose is actually pretty important for research on a biologically plausible version of backprop, because if you obtain approximate transposes, then several local learning rules give rise to gradient estimator analogues of backprop." He pointed us to his related papers [Towards Biologically Plausible Deep Learning](https://arxiv.org/abs/1502.04156) and [Equivalence of Equilibrium Propagation and Recurrent Backpropagation](https://arxiv.org/abs/1711.08416).
 
