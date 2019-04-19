@@ -62,6 +62,13 @@ The four variants of the LAE-PCA algorithm described above and runnable examples
     <img src="/img/iteration.png" alt="error per iteration" width="400"/>
 </p>
 
+We can visualize the trajectory of the algorithm in the `m = k = 1` (scalar) case with code provided [here](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/algorithms_visualize.py).
+
+<p align="center">
+    <img src="/img/untied.gif" alt="untied algorithm in scalar case" width="400"/>
+    <img src="/img/exact.gif" alt="exact algorithm in scalar case" width="400"/>
+</p>
+
 ### Visualization
 
 We've created an [interactive visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
