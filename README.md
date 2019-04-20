@@ -71,7 +71,7 @@ We can visualize the trajectories of these algorithm in the `m = k = 1` (scalar)
 
 ### Visualization
 
-We've created an [interactive visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes in the `m = k = 1` (scalar) case as well as the `m = 2, k = 1` case with tied weights.
+We've created an [interactive visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/) of the three loss landscapes and more in the `m = k = 1` (scalar) case.
 
 <p align="center">
     <a href="https://danielkunin.github.io/Regularized-Linear-Autoencoders/">
