@@ -67,12 +67,12 @@
 	            </script>
 	            <h3>Weight Alignment:</h3>
 	            <script>
-	                var render = katex.renderToString("\\begin{aligned} \\mathcal{L}_{\\text{pred}} &= (y - w_2w_1x)^2 \\cr  \\mathcal{L}_{\\text{info}} &= (x - w_2w_1x)^2 \\cr \\mathcal{L}_{\\text{reg}} &= w_2^2 + w_1^2 \\cr \\mathcal{L}_{\\text{self}} &= -2 (w_2w_1)  \\end{aligned}", { displayMode: true });
+	                var render = katex.renderToString("\\begin{aligned} \\mathcal{L}_{\\text{pred}} &= (y - w_2w_1x)^2 \\cr  \\mathcal{L}_{\\text{info}} &= (x - w_2w_1x)^2 \\cr \\mathcal{L}_{\\text{reg}} &= w_2^2 + w_1^2 \\cr \\mathcal{L}_{\\text{self}} &= -2 w_2w_1  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
-	            <p>These loss terms are combined weighted by their respective <script>document.write(katex.renderToString('\\lambda'));</script>.</p>
+	            <p>Weighted by their respective <script>document.write(katex.renderToString('\\lambda\'s'));</script>, these terms are combined to construct various loss landscapes.</p>
 	            <script>
-	                var render = katex.renderToString("\\begin{aligned} \\text{BP: } & \\mathcal{L}_{\\text{pred}} \\;(+ \\; \\mathcal{L}_{\\text{reg}}) \\cr  \\text{IA: } & \\mathcal{L}_{\\text{pred}} + \\mathcal{L}_{\\text{info}} + \\mathcal{L}_{\\text{reg}}\\cr \\text{SA: } & \\mathcal{L}_{\\text{pred}} + \\mathcal{L}_{\\text{self}} + \\mathcal{L}_{\\text{reg}} \\end{aligned}", { displayMode: true });
+	                var render = katex.renderToString("\\begin{aligned} \\text{Backpropagation: } & \\mathcal{L}_{\\text{pred}} \\;(+ \\; \\mathcal{L}_{\\text{reg}}) \\cr  \\text{Information Alignment: } & \\mathcal{L}_{\\text{pred}} + \\mathcal{L}_{\\text{info}} + \\mathcal{L}_{\\text{reg}}\\cr \\text{Symmetric Alignment: } & \\mathcal{L}_{\\text{pred}} + \\mathcal{L}_{\\text{self}} + \\mathcal{L}_{\\text{reg}} \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
 
