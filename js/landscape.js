@@ -289,12 +289,12 @@ var alignment = function() {
 
 window.onload = function() {
 	var gui = new dat.GUI();
-	var f1 = gui.addFolder('Autoencoder (m=1, k=1)');
+	var f1 = gui.addFolder('Linear Autoencoder');
 	// var f2 = gui.addFolder('Autoencoder Vector Case (m=2, k=1)');
-	var f2 = gui.addFolder('Prediction (m=1, k=1)');
+	var f2 = gui.addFolder('Low-rank Prediction');
 	// var f3 = gui.addFolder('Information Alignment (m=1, k=1)');
 	// var f4 = gui.addFolder('Symmetric Alignment (m=1, k=1)');
-	var f5 = gui.addFolder('Alignment (m=1, k=1)');
+	var f5 = gui.addFolder('Weight Alignment');
 	
 	var obj1 = new scalar();
 	var graph1 = function() {
