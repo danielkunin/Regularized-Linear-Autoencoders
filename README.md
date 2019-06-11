@@ -3,11 +3,11 @@
 
 Autoencoders are a deep learning model for representation learning. When trained to minimize the distance between the data and its reconstruction, linear autoencoders (LAEs) learn the subspace spanned by the top principal directions but cannot learn the principal directions themselves. In this paper, we prove that L2-regularized LAEs are symmetric at all critical points and learn the principal directions as the left singular vectors of the decoder. We smoothly parameterize the critical manifold and relate the minima to the MAP estimate of probabilistic PCA. We illustrate these results empirically and consider implications for PCA algorithms, computational neuroscience, and the algebraic topology of learning.
 
-We will present this work at ICML 2019:
+We will present this work on **Thursday, June 13 @ ICML 2019**.
 
-[Talk](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4987): Thu Jun 13th 4:40-5:00PM @ Hall A
+[Talk](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4987): 4:40-5:00PM @ Hall A
 
-[Poster](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4260): Thu Jun 13th 6:30-9:00PM @ Pacific Ballroom #26
+[Poster](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4260): 6:30-9:00PM @ Pacific Ballroom #26
 
 [ICML Paper](http://proceedings.mlr.press/v97/kunin19a.html), [arXiv](https://arxiv.org/abs/1901.08168), [Talks](https://github.com/danielkunin/Regularized-Linear-Autoencoders#talks), [Code](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/Loss%20Landscapes%20of%20Regularized%20Linear%20Autoencoders%20Code.ipynb), [Algorithms](https://github.com/danielkunin/Regularized-Linear-Autoencoders#lae-pca-algorithms), [Visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/), [Neuroscience](https://github.com/danielkunin/Regularized-Linear-Autoencoders#computational-neuroscience), [Resources](https://github.com/danielkunin/Regularized-Linear-Autoencoders#useful-resources), [History](https://github.com/danielkunin/Regularized-Linear-Autoencoders#project-history).
 
