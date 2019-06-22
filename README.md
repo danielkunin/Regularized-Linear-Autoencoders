@@ -9,6 +9,8 @@ Thoughts? Contact Daniel and Jon (@jbloom22): kunin@stanford.edu, jbloom@broadin
 
 ### Talks
 
+We presented a [20m talk](https://www.facebook.com/icml.imls/videos/321425055451434/?t=2957) and [poster](https://drive.google.com/open?id=1R-gjwqDfILVJi8hIW3ZW9yvHBXZT-lHC) on June 13 at ICML 2019. Here are the [slides](https://icml.cc/media/Slides/icml/2019/halla(13-16-00)-13-16-40-4987-loss_landscapes.pdf).
+
 We're excited to share a primer and seminar given by all four authors at the [Models, Inference and Algorithms Meeting](https://broadinstitute.org/mia) at the [Broad Institute of MIT and Harvard](https://www.broadinstitute.org/) on February 27, 2019.
 
 <p align="center">
@@ -24,8 +26,6 @@ We discussed our latest computational neuroscience results at the [Center for Br
     <a href="https://www.youtube.com/watch?v=3aqB_n087cE&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/3aqB_n087cE/0.jpg" alt="Google Brain" width="400"/></a>
     <a href="https://www.youtube.com/watch?v=bVlzJZIH4vs&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/bVlzJZIH4vs/0.jpg" alt="Center for Brains Minds + Machines" width="400"/></a>
 </p>
-
-We presented a [20m talk]([talk](https://www.facebook.com/icml.imls/videos/321425055451434/?t=2957)) at ICML 2019. Here are the [slides](https://icml.cc/media/Slides/icml/2019/halla(13-16-00)-13-16-40-4987-loss_landscapes.pdf) and [poster](https://drive.google.com/open?id=1R-gjwqDfILVJi8hIW3ZW9yvHBXZT-lHC).
 
 ### LAE-PCA Algorithms
 
