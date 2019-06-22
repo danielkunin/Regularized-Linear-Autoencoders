@@ -3,12 +3,6 @@
 
 Autoencoders are a deep learning model for representation learning. When trained to minimize the distance between the data and its reconstruction, linear autoencoders (LAEs) learn the subspace spanned by the top principal directions but cannot learn the principal directions themselves. In this paper, we prove that L2-regularized LAEs are symmetric at all critical points and learn the principal directions as the left singular vectors of the decoder. We smoothly parameterize the critical manifold and relate the minima to the MAP estimate of probabilistic PCA. We illustrate these results empirically and consider implications for PCA algorithms, computational neuroscience, and the algebraic topology of learning.
 
-We will present this work on **Thursday, June 13 @ ICML 2019**.
-
-[Talk](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4987): 4:40-5:00PM @ Hall A
-
-[Poster](https://icml.cc/Conferences/2019/ScheduleMultitrack?event=4260): 6:30-9:00PM @ Pacific Ballroom #26
-
 [ICML Paper](http://proceedings.mlr.press/v97/kunin19a.html), [arXiv](https://arxiv.org/abs/1901.08168), [Talks](https://github.com/danielkunin/Regularized-Linear-Autoencoders#talks), [Code](https://github.com/danielkunin/Regularized-Linear-Autoencoders/blob/master/Loss%20Landscapes%20of%20Regularized%20Linear%20Autoencoders%20Code.ipynb), [Algorithms](https://github.com/danielkunin/Regularized-Linear-Autoencoders#lae-pca-algorithms), [Visualization](https://danielkunin.github.io/Regularized-Linear-Autoencoders/), [Neuroscience](https://github.com/danielkunin/Regularized-Linear-Autoencoders#computational-neuroscience), [Resources](https://github.com/danielkunin/Regularized-Linear-Autoencoders#useful-resources), [History](https://github.com/danielkunin/Regularized-Linear-Autoencoders#project-history).
 
 Thoughts? Contact Daniel and Jon (@jbloom22): kunin@stanford.edu, jbloom@broadinstitute.org
@@ -30,6 +24,8 @@ We discussed our latest computational neuroscience results at the [Center for Br
     <a href="https://www.youtube.com/watch?v=3aqB_n087cE&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/3aqB_n087cE/0.jpg" alt="Google Brain" width="400"/></a>
     <a href="https://www.youtube.com/watch?v=bVlzJZIH4vs&list=PLlMMtlgw6qNjROoMNTBQjAcdx53kV50cS"><img src="https://img.youtube.com/vi/bVlzJZIH4vs/0.jpg" alt="Center for Brains Minds + Machines" width="400"/></a>
 </p>
+
+We presented a [20m talk]([talk](https://www.facebook.com/icml.imls/videos/321425055451434/?t=2957)) at ICML 2019. Here are the [slides](https://icml.cc/media/Slides/icml/2019/halla(13-16-00)-13-16-40-4987-loss_landscapes.pdf) and [poster](https://drive.google.com/open?id=1R-gjwqDfILVJi8hIW3ZW9yvHBXZT-lHC).
 
 ### LAE-PCA Algorithms
 
