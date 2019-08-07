@@ -54,18 +54,28 @@
 		<div id="container"></div>
 		<div id="info">
 			<div id="content" style="display: none">
-				<p>Explore the following loss landscapes in the scalar case <script>document.write(katex.renderToString('m = k = 1'));</script>, with <script>document.write(katex.renderToString('w_1,w_2,x,y \\in \\mathbb{R}'));</script>.</p>
-				<h3>Linear Autoencoder:</h3>
+				<p>Explore the following loss landscapes where <script>document.write(katex.renderToString('w_1,w_2,x,y \\in \\mathbb{R}'));</script>.</p>
+				<h3>(1) Linear Autoencoder (scalar case):</h3>
 				<script>
 	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (x - w_2w_1x)^2 \\cr  \\text{Product: } & (x - w_2w_1x)^2 + \\lambda|w_2 w_1|^\\alpha \\cr \\text{Sum: } & (x - w_2w_1x)^2 + \\lambda \\left( |w_2|^\\alpha + |w_1|^\\alpha \\right )  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
-	            <h3>Low-rank Prediction:</h3>
+	            <h3>(2) Linear Autoencoder (vector case):</h3>
+				<script>
+	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & ||X - WW^\\intercal X||^2_F \\cr  \\text{Product: } & ||X - WW^\\intercal X||^2_F + \\lambda||W W^\\intercal||^\\alpha_F \\cr \\text{Sum: } & ||X - WW^\\intercal X||^2_F + 2\\lambda ||W||^\\alpha_F \\end{aligned}", { displayMode: true });
+	                document.writeln(render);
+	            </script>
+	            <p>where <script>document.write(katex.renderToString('W, X'));</script> are defined as</p>
+	            <script>
+	                var render = katex.renderToString("W = \\begin{bmatrix} w_1 \\cr w_2 \\end{bmatrix}\\qquad X = \\begin{bmatrix} x & 0 \\cr 0 & y \\end{bmatrix} ", { displayMode: true });
+	                document.writeln(render);
+	            </script>
+	            <h3>(3) Low-rank Prediction:</h3>
 	            <script>
 	                var render = katex.renderToString("\\begin{aligned} \\text{Unregularized: } & (y - w_2w_1x)^2 \\cr  \\text{Product: } & (y - w_2w_1x)^2 + \\lambda|w_2 w_1|^\\alpha \\cr \\text{Sum: } & (y - w_2w_1x)^2 + \\lambda \\left( |w_2|^\\alpha + |w_1|^\\alpha \\right )  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
 	            </script>
-	            <h3>Weight Alignment:</h3>
+	            <h3>(4) Weight Alignment:</h3>
 	            <script>
 	                var render = katex.renderToString("\\begin{aligned} \\mathcal{L}_{\\text{pred}} &= (y - w_2w_1x)^2 \\cr  \\mathcal{L}_{\\text{info}} &= (x - w_2w_1x)^2 \\cr \\mathcal{L}_{\\text{reg}} &= w_2^2 + w_1^2 \\cr \\mathcal{L}_{\\text{self}} &= -2 w_2w_1  \\end{aligned}", { displayMode: true });
 	                document.writeln(render);
