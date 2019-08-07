@@ -130,7 +130,7 @@ THREE.ParametricGeometries = {
 			var tied = param[2]
 
 			if (tied) {
-				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x + ((1 - w2**2)**2 + (w1*w2)**2) * y;
+				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x**2 + ((1 - w2**2)**2 + (w1*w2)**2) * y**2;
 			} else {
 				var z = (y - w2 * w1 * x)**2;
 			}
@@ -154,7 +154,7 @@ THREE.ParametricGeometries = {
 			var tied = param[2]
 
 			if (tied) {
-				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x + ((1 - w2**2)**2 + (w1*w2)**2) * y + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
+				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x**2 + ((1 - w2**2)**2 + (w1*w2)**2) * y**2 + lamb * (Math.abs(w1)**(2*pow) + 2*Math.abs(w1 * w2)**pow + Math.abs(w2)**(2*pow));
 			} else {
 				var z = (y - w2 * w1 * x)**2 + lamb * Math.abs(w2 * w1)**pow;
 			}
@@ -178,7 +178,7 @@ THREE.ParametricGeometries = {
 			var tied = param[2]
 
 			if (tied) {
-				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x + ((1 - w2**2)**2 + (w1*w2)**2) * y + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
+				var z = ((1 - w1**2)**2 + (w1*w2)**2) * x**2 + ((1 - w2**2)**2 + (w1*w2)**2) * y**2 + 2 * lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			} else {
 				var z = (y - w2 * w1 * x)**2 + lamb * (Math.abs(w1)**pow + Math.abs(w2)**pow);
 			}
@@ -270,8 +270,8 @@ window.onload = function() {
 		f4.close();
 	}
 	f2.add(obj2, 'loss', ['Unregularized', 'Product', 'Sum']).onChange(graph2).name('Loss Function');
-	f2.add(obj2, 'x', 0, 2).onChange(graph2).name(katex.renderToString('\\sigma_1^2'));
-	f2.add(obj2, 'y', 0, 2).onChange(graph2).name(katex.renderToString('\\sigma_2^2'));
+	f2.add(obj2, 'x', -2, 2).onChange(graph2).name(katex.renderToString('x'));
+	f2.add(obj2, 'y', -2, 2).onChange(graph2).name(katex.renderToString('y'));
 	f2.add(obj2, 'lamb', 0, 2).onChange(graph2).name(katex.renderToString('\\lambda'));
 	f2.add(obj2, 'pow', 0.5, 4).onChange(graph2).name(katex.renderToString('\\alpha'));
 
